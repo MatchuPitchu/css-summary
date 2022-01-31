@@ -83,8 +83,8 @@ Browser:
 
   ```HTML
   <!-- Example -->
-  <div class="secition">
-    <p class="amazing">CSS</p>
+  <div class='section'>
+    <p class='amazing'>CSS</p>
   </div>
   ```
 
@@ -217,4 +217,198 @@ Algorithm that calculates boxes and determines the layout of these boxes, for ea
   - `abstracts/`: variables, mixins
   - `vendors/`: 3rd-party CSS
 
-## CSS hints
+## Introduction to Sass (= SCSS) and NPM
+
+- Sass/SCSS is a CSS preprocessor, an extension for CSS
+
+  - `Variables`: reusable values like colors, font-sizes, spacing etc.
+
+    ```SCSS
+    $color-primary: #f9ed69; // in Sass you can write comments like in JS
+
+    p {
+      color: $color-primary;
+    }
+    ```
+
+  - `Nesting`: to nest selectors inside of one another to write less code
+
+    ```SCSS
+    .nav {
+    list-style: none;
+
+      & li {
+      display: inline-block
+      }
+    }
+    ```
+
+  - `Operators`: for mathematical operations
+  - `Partials and imports`: to write CSS in different files and import them all into 1 single file
+  - `Mixins`: write reusable pieces of CSS code
+
+    ```SCSS
+    // reusable piece of code, reuse it with @include NAME;
+    // can pass argument into mixin with @include NAME(arg)
+    @mixin style-link-text($color) {
+      text-decoration: none;
+      text-transform: uppercase;
+      color: $color;
+    }
+
+    a:link {
+      @include style-link-text($color-text-dark);
+    }
+    ```
+
+  - `Functions`: similar to mixins, but return reusable values
+
+    ```SCSS
+    // declare a function
+    @function divide($a, $b) {
+      @return $a / $b;
+    }
+
+    nav {
+      margin: divide(60px, 2);
+    }
+    ```
+
+  - `Extends`: to make different selectors inherit declarations that are common to all of them
+
+    - difference to mixin: extension is NOT copied to the position where `@extend` is called (so multiple times copy of same code), it is the inverse direction: selector, where `@extend` is used, is copied to `%NAME definition`
+    - attention: only use @extend in selectors which are consistently related to each other, otherwise you could have a maintenance problem
+
+    ```SCSS
+    // define extension with %NAME { ... }, use it with @extend %NAME;
+    %btn-placeholder {
+      text-align: center;
+      width: $width-button;
+      padding: 10px;
+      border-radius: 100px;
+      @include style-link-text($color-text-light);
+    }
+
+    .btn-main {
+      &:link {
+        @extend %btn-placeholder;
+        background-color: blue;
+      }
+    }
+
+    .btn-hot {
+      &:link {
+        @extend %btn-placeholder;
+        background-color: red;
+      }
+    }
+    ```
+
+  - `Control directives`: code with conditionals and loops
+
+- Procedure: write Sass code in Sass files -> Sass compiler -> compiled CSS code
+
+### Basic Summary Example
+
+```HTML
+<nav>
+  <ul class='navigation'>
+    <li><a href='#'>About us</a></li>
+    <li><a href='#'>Contact</a></li>
+  </ul>
+  <div class='buttons'>
+    <a role='button' class='btn-main' href='#'>Sign up</a>
+    <a role='button' class='btn-hot' href='#'>Login</a>
+  </div>
+</nav>
+```
+
+```SCSS
+$color-primary: #f9ed69; // yellow
+$color-secondary: #FF794A; // orange
+$color-text-dark: #333;
+$color-text-light: #eee;
+
+$width-button: 150px;
+
+// reusable piece of code, reuse it with @include NAME;
+// can pass argument into mixin with @include NAME(arg)
+@mixin style-link-text($color) {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: $color;
+}
+
+// declare a function
+@function divide($a, $b) {
+  @return $a / $b;
+}
+
+nav {
+  margin: divide(60px, 2);
+  background-color: $color-primary;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.navigation {
+  list-style: none;
+  display: flex;
+
+  // nested selectors -> .navigation li
+  li {
+    margin-left: 30px;
+
+    // re-use wrapping selector with & -> .navigation li:first-child
+    &:first-child {
+      margin: 0;
+    }
+
+    // .navigation li a:link
+    // notice: a without explicit state (like :link) applies across all states (:visited, :hover, :active, :focus)
+    a:link {
+      @include style-link-text($color-text-dark);
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+}
+
+// define extension with %NAME { ... }, use it with @extend %NAME;
+// difference to mixin: extension is NOT copied to the position where @extend is called (so multiple times copy of same code), it is the inverse direction with extension: the selector, where @extend is used, is copied to %NAME definition
+// notice: only use @extend in selectors which are consistently related to each other, otherwise you could have a maintenance problem
+%btn-placeholder {
+  text-align: center;
+  width: $width-button;
+  padding: 10px;
+  border-radius: 100px;
+  @include style-link-text($color-text-light);
+}
+
+.btn-main {
+  &:link {
+    @extend %btn-placeholder;
+    background-color: $color-secondary;
+  }
+
+  &:hover {
+    // built-in fn to darken a color
+    background-color: darken($color-secondary, 15%);
+  }
+}
+
+.btn-hot {
+  &:link {
+    @extend %btn-placeholder;
+    background-color: $color-secondary;
+  }
+
+  &:hover {
+    // built-in fn to darken a color
+    background-color: lighten($color-secondary, 10%);
+  }
+}
+```
