@@ -219,6 +219,17 @@ Algorithm that calculates boxes and determines the layout of these boxes, for ea
 
 ## Introduction to Sass (= SCSS) and NPM
 
+- global npm package to compile Sass on Computer: `npm install -g sass`
+- define `script` in `package.json` for compiling Sass file(s) to CSS file(s) and watch changes in Sass when saving it
+
+  ```JSON
+  "scripts": {
+    "compile:sass": "sass sass/main.scss css/style.css -w"
+  }
+  ```
+
+- notice: browser uses always final CSS code, Sass is only for dev purposes
+
 - Sass/SCSS is a CSS preprocessor, an extension for CSS
 
   - `Variables`: reusable values like colors, font-sizes, spacing etc.
