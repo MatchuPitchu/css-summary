@@ -204,29 +204,46 @@ Algorithm that calculates boxes and determines the layout of these boxes, for ea
   .block__element--modifier {}
   ```
 
+  - `Attention` (teacher did NOT have correct usage of modifiers): you can NOT use modifier on its own, it must modify the block/element main class. For example:
+
+  ```HTML
+  <h1 class="heading-primary heading-primary--rounded heading-primary--orange">
+      ...
+  </h1>
+
+  <h1 class="heading-primary">
+      <span class="heading-primary__text heading-primary__text--main">Outdoors</span>
+      <span class="heading-primary__text heading-primary__text--sub">is where life happens</span>
+  </h1>
+  ```
+
 ### Architect
 
 - create logical folder and file structure
 - `7-1-Pattern`: 7 different folders for partial Sass files, 1 main Sass fileto import all other files into a compiled CSS stylesheet
 - 7 Folders:
-  - `base/`
-  - `components/`
-  - `layout/`: overall layout of project
-  - `pages/`: styles for specific pages of projekt
-  - `themes/`
-  - `abstracts/`: variables, mixins
-  - `vendors/`: 3rd-party CSS
+- `base/`
+- `components/`
+- `layout/`: overall layout of project
+- `pages/`: styles for specific pages of projekt
+- `themes/`
+- `abstracts/`: variables, mixins
+- `vendors/`: 3rd-party CSS
+- in Sass: naming of modules (separated files that export only to a main.scss or style.scss) with underscore `_variables.scss`
 
-## Introduction to Sass (= SCSS) and NPM
+## Introduction to Sass (= SCSS)
+
+Documentation with examples: <https://sass-lang.com/guide>
 
 - global npm package to compile Sass on Computer: `npm install -g sass`
 - define `script` in `package.json` for compiling Sass file(s) to CSS file(s) and watch changes in Sass when saving it
 
-  ```JSON
-  "scripts": {
-    "compile:sass": "sass sass/main.scss css/style.css -w"
-  }
-  ```
+```JSON
+"scripts": {
+  "compile:sass": "sass sass/main.scss css/style.css -w", // only selected file to selected file
+  "compile:sass": "sass sass:css -w" // whole folder to folder
+}
+```
 
 - notice: browser uses always final CSS code, Sass is only for dev purposes
 
@@ -273,6 +290,8 @@ Algorithm that calculates boxes and determines the layout of these boxes, for ea
     ```
 
   - `Functions`: similar to mixins, but return reusable values
+
+    - CSS built-in function `calc()` it also good option: to use Sass variable in `calc(#{$variable-name})`
 
     ```SCSS
     // declare a function
@@ -420,6 +439,102 @@ nav {
   &:hover {
     // built-in fn to darken a color
     background-color: lighten($color-secondary, 10%);
+  }
+}
+```
+
+## Responsive Design Principles
+
+- make websites useable for all kind of devices and viewports
+- `Fluid Layouts`:
+  - adapt webpage to current viewport width (or even height)
+  - use `%` (or `vh`/`vw`) instead of px for elements that should adapt to viewport
+  - use `max-width` instead of `width`
+- `Responsive Units`
+  - use `rem` instead of `px` for most lenghts
+- `Flexible Images`
+  - by default, images don't scale automatically with viewport size
+  - use `%` for image dimensions, together with `max-width`
+- `Media Queries`
+  - change CSS styles on certain `breakpoints`
+
+### Layout Types
+
+- `Float`: still used, but outdated
+- `Flexbox`: laying out elements in a 1-dimensional row; perfect for `component layout`
+- `CSS Grid`: laying out element in a fully-fledged 2-dimensional grid; perfect for `page layouts and complex components`
+
+#### Example Grid Layout with Flexbox
+
+- explaination: <https://www.taniarascia.com/easiest-flex-grid-ever/>
+
+```HTML
+<section class="grid-test">
+  <div class="row">
+    <div class="col-1-of-2">Col 1 of 2</div>
+    <div class="col-1-of-2">Col 1 of 2</div>
+  </div>
+  <div class="row">
+    <div class="col-1-of-3">Col 1 of 3</div>
+    <div class="col-1-of-3">Col 1 of 3</div>
+    <div class="col-1-of-3">Col 1 of 3</div>
+  </div>
+  <div class="row">
+    <div class="col-1-of-3">Col 1 of 3</div>
+    <div class="col-2-of-3">Col 2 of 3</div>
+  </div>
+  <div class="row">
+    <div class="col-1-of-4">Col 1 of 4</div>
+    <div class="col-1-of-4">Col 1 of 4</div>
+    <div class="col-1-of-4">Col 1 of 4</div>
+    <div class="col-1-of-4">Col 1 of 4</div>
+  </div>
+  <div class="row">
+    <div class="col-1-of-4">Col 1 of 4</div>
+    <div class="col-1-of-4">Col 1 of 4</div>
+    <div class="col-2-of-4">Col 2 of 4</div>
+  </div>
+  <div class="row">
+    <div class="col-1-of-4">Col 1 of 4</div>
+    <div class="col-3-of-4">Col 3 of 4</div>
+  </div>
+</section>
+```
+
+```SCSS
+// layout/_grid.scss
+$grid-width: 114rem;
+$gutter-vertical: 8rem;
+$gutter-horizontal: 6rem;
+
+.grid-test {
+  display: flex;
+  flex-direction: column;
+  row-gap: $gutter-vertical;
+  max-width: 114rem; // 1rem = 10px (root font-size);
+  margin: 0 auto;
+}
+
+.row {
+  background-color: #eee;
+  display: flex;
+  flex-flow: row wrap;
+  row-gap: $gutter-vertical;
+  column-gap: $gutter-horizontal;
+
+  // selects all elements with class atribute starting with 'col-...'
+  // ^ starts with
+  // $ ends with
+  // * contains it
+  [class^='col-'] {
+    flex-basis: 100%;
+    background-color: orangered;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .row {
+    flex-flow: row nowrap;
   }
 }
 ```
