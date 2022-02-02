@@ -520,7 +520,6 @@ $gutter-horizontal: 6rem;
   display: flex;
   flex-flow: row wrap;
   row-gap: $gutter-vertical;
-  column-gap: $gutter-horizontal;
 
   // selects all elements with class atribute starting with 'col-...'
   // ^ starts with
@@ -535,6 +534,26 @@ $gutter-horizontal: 6rem;
 @media screen and (min-width: 800px) {
   .row {
     flex-flow: row nowrap;
+
+    .col-1-of-3 {
+      flex: calc(10 / 3);
+    }
+
+    .col-2-of-3 {
+      flex: calc(10 / 3 * 2);
+    }
+
+    .col-1-of-4 {
+      flex: calc(10 / 4);
+    }
+
+    .col-2-of-4 {
+      flex: calc(10 / 4 * 2);
+    }
+
+    .col-3-of-4 {
+      flex: calc(10 / 4 * 3);
+    }
   }
 }
 ```
