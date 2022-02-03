@@ -507,27 +507,28 @@ $grid-width: 114rem;
 $gutter-vertical: 8rem;
 $gutter-horizontal: 6rem;
 
-.grid-test {
+// how to write flexbox grid mobile first: https://www.taniarascia.com/easiest-flex-grid-ever/
+.grid {
   display: flex;
   flex-direction: column;
   row-gap: $gutter-vertical;
-  max-width: 114rem; // 1rem = 10px (root font-size);
-  margin: 0 auto;
 }
 
 .row {
-  background-color: #eee;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column nowrap;
   row-gap: $gutter-vertical;
+  column-gap: $gutter-horizontal;
+  width: 100%;
+  max-width: 114rem; // 1rem = 10px (root font-size);
+  margin: 0 auto;
 
   // selects all elements with class atribute starting with 'col-...'
   // ^ starts with
   // $ ends with
   // * contains it
   [class^='col-'] {
-    flex-basis: 100%;
-    background-color: orangered;
+    // ...
   }
 }
 
@@ -535,24 +536,28 @@ $gutter-horizontal: 6rem;
   .row {
     flex-flow: row nowrap;
 
+    .col-1-of-2 {
+      flex: 1;
+    }
+
     .col-1-of-3 {
-      flex: calc(10 / 3);
+      flex: 1;
     }
 
     .col-2-of-3 {
-      flex: calc(10 / 3 * 2);
+      flex: 2;
     }
 
     .col-1-of-4 {
-      flex: calc(10 / 4);
+      flex: 1;
     }
 
     .col-2-of-4 {
-      flex: calc(10 / 4 * 2);
+      flex: 2;
     }
 
     .col-3-of-4 {
-      flex: calc(10 / 4 * 3);
+      flex: 3;
     }
   }
 }
