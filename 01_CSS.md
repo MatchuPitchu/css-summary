@@ -556,6 +556,32 @@ nav {
   </picture>
   ```
 
+- `responsive images in CSS`:
+
+  - use `media query` to switch background images e.g. depending on screen resolution (dpi) and width
+
+    ```CSS
+    .header {
+      background-image: linear-gradient(
+          to right bottom,
+          rgba($color-primary-light, 0.8),
+          rgba($color-primary-dark, 0.8)
+        ),
+        url(../img/hero-small.jpg);
+    }
+    /* comma stands for OR */
+    @media (min-resolution: 192dpi) and (min-width: 600px), (min-width: 2000px) {
+      .header {
+        background-image: linear-gradient(
+            to right bottom,
+            rgba($color-primary-light, 0.8),
+            rgba($color-primary-dark, 0.8)
+          ),
+          url(../img/hero.jpg);
+      }
+    }
+    ```
+
 ### Layout Types
 
 - `Float`: still used, but outdated
