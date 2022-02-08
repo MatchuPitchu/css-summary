@@ -1,5 +1,14 @@
 # CSS
 
+## General Hints
+
+- HTML-Entities Sonderzeichen Symbole: <http://unicode.e-workers.de/entities.php>
+
+  ```HTML
+  <p>&rarr; Pfeil</p>
+  <p>&times; x</p>
+  ```
+
 ## 3 pillars of writing good HTML and CSS
 
 - `responsive design`
@@ -457,6 +466,95 @@ nav {
   - use `%` for image dimensions, together with `max-width`
 - `Media Queries`
   - change CSS styles on certain `breakpoints`
+  - media queries don't add importance or specificity to selectors, so code `order matters` -> that's why put them at the end
+  - `@media (max-width: 600px) { ... }`: until 600px, following rules are applied
+  - `@media (min-width: 600px) { ... }`: from 600px on, following rules are applied
+  - `How to define best media queries`?
+    - good way: a) group currently used devices together in distinct groups (mobiles, pads, desktops - see: <https://gs.statcounter.com/screen-resolution-stats/all/germany>), b) define breakpoints between groups
+    - best way: a) create design (desktop or mobile first), b) check, where design breaks and use these points as breakpoints
+- `desktop-first`:
+  - write first CSS for large screen, then use media query with `max-width` to shrink design to smaller screens
+- `mobile-first`:
+  - write first CSS for small screen, then use media query with `min-width` to expand design to large screen
+  - Pros:
+    - optimized for mobile experience
+    - reduces website and apps to essentials
+    - results in smaller, faster and more efficient products
+    - prioritizes content over aesthetic design
+  - Cons:
+    - desktop version could feel empty and simplistic
+    - more difficult and counterintuitive to develop
+  - Questions to answer: Do your users use mobile or desktop version? What's the purpose of the website?
+
+### Responsive Images
+
+- adjust image to screen size to avoid unnecessary downloading
+- good description: <https://www.mediaevent.de/html/picture.html>
+- `resolution switching`: decrease img resolution on smaller screen
+
+  - `srcset`: path with `width descriptor` ...w to inform browser about img width
+  - `sizes`: list of breakpoints with media condition or last one as a default option
+
+    - check in browser dev tools which size is covered by an img until certain wished breakpoint
+      and calculate viewport width (e.g. `900px/img size in browser`) that uses browser to choose with img src filled space in the best way
+
+  - `src`: add attribute for old browsers that don't understand `srcset`
+
+    ```HTML
+    <img
+      srcset="img/nat-1.jpg 300w, img/nat-1-large.jpg 1000w"
+      sizes="(max-width: 900px) 20vw,
+             (max-width: 600px) 30vw,
+             300px"
+      alt="Photo 1"
+      class="composition__photo composition__photo--p1"
+      src="img/nat-1-large.jpg"
+      loading="lazy"
+    />
+    ```
+
+- `density switching`: decrease img resolution of an img of the same size
+
+  - `density descriptor`: 1x/2x according to screen (high-/low-res) of user, `src` is fallback for old browsers that don't understand `srcset`
+
+    ```HTML
+    <img
+      srcset="img/logo-green-1x.png 1x, img/logo-green-2x.png 2x"
+      alt="Full logo"
+      class="footer__logo"
+      src="img/logo-green-1x.png"
+      loading="lazy"
+    />
+    ```
+
+- `art direction`: different img for large and small screen
+
+  - changing images with `<picture>`
+  - media attribute in `<source>` stands for media condition; if query does NOT match, then fallback (-> `<img .../>`) is displayed
+
+  ```HTML
+  <picture class="footer__logo">
+    <source
+      srcset="img/logo-green-small-1x.png 1x, img/logo-green-small-2x.png 2x"
+      media="(max-width: 37.5em)"
+    />
+    <img
+      srcset="img/logo-green-1x.png 1x, img/logo-green-2x.png 2x"
+      alt="Full logo"
+      src="img/logo-green-1x.png"
+      loading="lazy"
+    />
+  </picture>
+
+  <picture>
+   <source media="(min-width: 1440px)" srcset="pic-920.jpg 1x, pic-1840.jpg 2x">
+   <source media="(min-width: 680px) and (orientation:portrait)" srcset="pic-960-quad.jpg">
+   <source media="(min-width: 680px)" srcset="html-pic-920.jpg">
+   <source media="(min-width: 300px) and (orientation:portrait)" srcset="pic-600-quad.jpg">
+   <source media="(min-width: 300px)" srcset="pic-600.jpg">
+   <img loading="lazy" src="pic-960-quad.jpg" width="960" height="670" alt="HTML picture-Element">
+  </picture>
+  ```
 
 ### Layout Types
 
