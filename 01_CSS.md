@@ -261,7 +261,7 @@ Algorithm that calculates boxes and determines the layout of these boxes, for ea
   "scripts": {
     "dev-server": "lite-server",
     "watch:sass": "sass --color sass:css -w",
-    "start": "npm-run-all dev-server watch:sass",
+    "start": "npm-run-all --parallel dev-server watch:sass",
     "compile:sass": "sass sass/style.scss css/style.comp.css",
     "concat:css": "concat -o css/style.concat.css css/icon-fonts.css css/style.comp.css",
     // 'last ...' stands for x last versions of different browsers after caniuse.com to support with autoprefixes
