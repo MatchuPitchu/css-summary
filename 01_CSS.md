@@ -115,7 +115,7 @@ Browser:
   }
   ```
 
-### Units Conversion From Relative To Absolute (px)
+## Units Conversion From Relative To Absolute (px)
 
 ```CSS
 html, body {
@@ -145,7 +145,7 @@ header {
   - `rem` (font + lengths): reference is root font-size
 - viewport-based: `vh`, `vw` -> x% of viewport height or width
 
-### Inheritance
+## Inheritance
 
 - each CSS property must have a value
 - first CSS searches `cascaded value`
@@ -167,7 +167,7 @@ header {
 }
 ```
 
-### Visual Formatting Model
+## Visual Formatting Model
 
 Algorithm that calculates boxes and determines the layout of these boxes, for each element in the render tree, in order to determine the final layout of the page.
 
@@ -239,6 +239,46 @@ Algorithm that calculates boxes and determines the layout of these boxes, for ea
 - `abstracts/`: variables, mixins
 - `vendors/`: 3rd-party CSS
 - in Sass: naming of modules (separated files that export only to a main.scss or style.scss) with underscore `_variables.scss`
+
+## Build Process Automation Example
+
+- `style.scss` ->
+
+  - 1. Compilation -> `style.comp.css` ->
+  - 2. Concatenation -> `icon-font.css`, `style.concat.css` etc. multiple files ->
+    - Important: in `index.html`, comment other css files than `style.css` out when you are ready to build the project, since in build process, this file is concatenated to style.css; BUT: you need them for development
+  - 3. Add prefixes to code -> `style.prefix.css` ->
+  - 4. Compressing -> `style.css` (production code)
+
+- Concatenation npm package: `npm i concat --save-dev` <https://www.npmjs.com/package/concat>
+- Autoprefixer npm package: `npm i postcss postcss-cli autoprefixer --save-dev` <https://www.npmjs.com/package/autoprefixer>
+
+```JSON
+// package.json
+// & runs tasks in parallel; && runs tasks sequentially
+{
+  "scripts": {
+    "dev-server": "lite-server",
+    "watch:sass": "sass --color sass:css -w",
+    "start": "npm run dev-server & npm run watch:sass",
+    "compile:sass": "sass sass/style.scss css/style.comp.css",
+    "concat:css": "concat -o css/style.concat.css css/icon-fonts.css css/style.comp.css",
+    // 'last ...' stands for x last versions of different browsers after caniuse.com to support with autoprefixes
+    "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' css/style.concat.css -o css/style.prefix.css",
+    "compress:css": "sass css/style.prefix.css css/style.css --style=compressed",
+    // run all script tasks at once
+    "build:css": "npm run compile:sass && npm run concat:css && npm run prefix:css && npm run compress:css"
+  },
+    "devDependencies": {
+      "autoprefixer": "^10.4.2",
+      "concat": "^1.0.3",
+      "lite-server": "^2.6.1",
+      "postcss": "^8.4.6",
+      "postcss-cli": "^9.1.0"
+    }
+}
+
+```
 
 ## Introduction to Sass (= SCSS)
 
