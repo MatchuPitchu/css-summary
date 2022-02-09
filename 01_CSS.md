@@ -452,6 +452,19 @@ nav {
 }
 ```
 
+## Browser Support for Properties
+
+- check browser support: <https://caniuse.com/>
+- with `@supports`, check if CSS property is supported by browser, if yes then wrapped rules are applied
+
+  ```SCSS
+  @supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px); // NOT working in Firefox
+    background-color: rgba($color-black, 0.3);
+  }
+  ```
+
 ## Responsive Design Principles
 
 - make websites useable for all kind of devices and viewports
