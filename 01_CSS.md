@@ -252,6 +252,7 @@ Algorithm that calculates boxes and determines the layout of these boxes, for ea
 
 - Concatenation npm package: `npm i concat --save-dev` <https://www.npmjs.com/package/concat>
 - Autoprefixer npm package: `npm i postcss postcss-cli autoprefixer --save-dev` <https://www.npmjs.com/package/autoprefixer>
+- npm run all package to run multiple script tasks in parallel: `npm install npm-run-all --save-dev` https://www.npmjs.com/package/npm-run-all>
 
 ```JSON
 // package.json
@@ -260,19 +261,20 @@ Algorithm that calculates boxes and determines the layout of these boxes, for ea
   "scripts": {
     "dev-server": "lite-server",
     "watch:sass": "sass --color sass:css -w",
-    "start": "npm run dev-server & npm run watch:sass",
+    "start": "npm-run-all dev-server watch:sass",
     "compile:sass": "sass sass/style.scss css/style.comp.css",
     "concat:css": "concat -o css/style.concat.css css/icon-fonts.css css/style.comp.css",
     // 'last ...' stands for x last versions of different browsers after caniuse.com to support with autoprefixes
     "prefix:css": "postcss --use autoprefixer -b 'last 10 versions' css/style.concat.css -o css/style.prefix.css",
     "compress:css": "sass css/style.prefix.css css/style.css --style=compressed",
     // run all script tasks at once
-    "build:css": "npm run compile:sass && npm run concat:css && npm run prefix:css && npm run compress:css"
+    "build:css": "npm-run-all compile:sass concat:css prefix:css compress:css"
   },
     "devDependencies": {
       "autoprefixer": "^10.4.2",
       "concat": "^1.0.3",
       "lite-server": "^2.6.1",
+      "npm-run-all": "^4.1.5",
       "postcss": "^8.4.6",
       "postcss-cli": "^9.1.0"
     }
