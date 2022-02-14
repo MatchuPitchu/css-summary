@@ -234,6 +234,66 @@ in media query declaration: 1em = 16px
 }
 ```
 
+## Button with nice hover effect
+
+```SCSS
+.btn {
+  font-size: 1.5rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  border-radius: 100px;
+  border: none;
+  background-image: linear-gradient(
+    to right,
+    var(--color-primary-light),
+    var(--color-primary-dark)
+  );
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  & > * {
+    display: inline-block; // convert span to inline-block to use padding top/bottom
+    height: 100%;
+    width: 100%;
+    transition: all 0.2s;
+  }
+
+  &__visible {
+    padding: 2rem 7.5rem;
+  }
+
+  &__invisible {
+    position: absolute;
+    left: 0;
+    top: -100%; // move up whole height of element
+    padding: 2rem 0;
+  }
+
+  &:hover {
+    background-image: linear-gradient(
+      to right,
+      var(--color-primary-dark),
+      var(--color-primary-light)
+    );
+  }
+
+  &:hover > &__visible {
+    transform: translateY(100%);
+  }
+
+  &:hover > &__invisible {
+    top: 0;
+  }
+
+  &:focus {
+    outline: none;
+    animation: pulsate 1s infinite;
+  }
+}
+```
+
 ## Skew Effect on a box, but reset skew for all direct child elements
 
 ```CSS
@@ -757,5 +817,38 @@ in media query declaration: 1em = 16px
       font-size: 4rem;
     }
   }
+}
+```
+
+## :last-of-type vs :last-child pseudo class
+
+- `:last-of-type` pseudo class selects last child element in `paragraph` parent element
+- `:last-child` includes all children of `paragraph` parent and only applies for last child
+
+```CSS
+.paragraph:not(:last-of-type) {
+  margin-bottom: 2rem;
+}
+```
+
+## Border-box vs Content-box
+
+```SCSS
+  .photo {
+    box-sizing: content-box; // now border is added on top and does NOT shrink the content (= image)
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    border: 3px solid #fff;
+  }
+```
+
+## Z-Index
+
+```SCSS
+.text {
+  margin-bottom: 2rem;
+  position: relative; // Z-INDEX only works with position property
+  z-index: 10;
 }
 ```
