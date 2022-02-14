@@ -31,6 +31,113 @@
     - `flex-basis: auto | <length>`
       - fixed size (`width`/`height`) for item
 
+## CSS Grid
+
+- `2-dimensional` grid system
+- Grid works perfectly together with Flexbox (-> which is `1-dimensional`)
+- use Firefox `dev tools` to inspect grid layout
+
+![Grid Properties Overview](./img/grid-properties-overview.png)
+
+- Terminology:
+  - `display: grid`: creating grid container
+  - `column axis`, `row axis`: direction
+  - `grid line`
+    - automatically numbered lines that devide the columns and the rows
+    - numbering starts at 1 and is made for column and row axis
+    - for column: 1 starts at upper left corner
+    - for row: 1 starts at upper right corner
+    - total numbers of lines (quantity of columns + 1, quantity of rows + 1)
+  - `row gutter` and `column gutter`: space between rows and columns
+  - `grid track`: space between 2 `grid lines`, no matter if vertical (-> `row`) or horizontal (-> `column`)
+  - `grid area`: area between 2 horizontal AND 2 vertical `grid lines` (e.g. col line 1 to 4 and row line 1 to 3)
+  - `grid cell`: `area` between 2 adjacent horizontal and vertical `grid lines` (e.g. col line 1 to 2 and row line 1 to 2)
+- Container Properties (first value = default)
+  - `grid-template`
+    - `grid-template-rows`
+    - `grid-template-columns`
+    - `grid-template-areas`
+  - `grid-gap`
+    - `grid-row-gap`
+    - `grid-column-gap`
+  - `justify-items`
+  - `align-items`
+  - `justify-content`
+  - `align-content`
+  - `grid-auto-rows`
+  - `grid-auto-columns`
+  - `grid-auto-flow`
+- Grid-Item Properties (first value = default)
+  - `grid-area`
+    - `grid-row`
+      - `grid-row-start`
+      - `grid-row-end`
+    - `grid-column`
+      - `grid-column-start`
+      - `grid-column-end`
+  - `justify-self`
+  - `align-self`
+  - `order`
+
+## Example Basic Grid Layout
+
+```HTML
+<div class="container">
+  <div class="item item--1">1: Orange</div>
+  <div class="item item--2">2: Green</div>
+  <div class="item item--3">3: Violet</div>
+  <div class="item item--4">4: Pink</div>
+  <div class="item item--5">5: Blue</div>
+  <div class="item item--6">6: Brown</div>
+</div>
+```
+
+```SCSS
+.container {
+  background-color: #eee;
+  width: 900px;
+  margin: 30px auto;
+
+  display: grid;
+  grid-template-rows: 150px 150px; // define number of rows and its heights
+  grid-template-columns: 150px 150px 150px; // define number of cols and its width
+
+  // grid-row-gap: 30px; // gap between rows
+  // grid-column-gap: 50px; // gap between cols
+  grid-gap: 30px 50px;
+}
+
+.item {
+  padding: 20px;
+  font-size: 30px;
+  color: #fff;
+
+  &--1 {
+    background-color: orange;
+  }
+
+  &--2 {
+    background-color: green;
+  }
+
+  &--3 {
+    background-color: violet;
+  }
+
+  &--4 {
+    background-color: pink;
+  }
+
+  &--5 {
+    background-color: blue;
+  }
+
+  &--6 {
+    background-color: brown;
+  }
+}
+```
+
 ## Example Grid Layout with Flexbox
 
 - explanation: <https://www.taniarascia.com/easiest-flex-grid-ever/>
