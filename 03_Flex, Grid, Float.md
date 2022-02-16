@@ -563,3 +563,86 @@ $gutter-horizontal: 6rem;
   }
 }
 ```
+
+### Example: min-content, max-content
+
+- `max-content`: width of largest content of a grid item in this column or row WITHOUT line break
+- `min-content`: column OR row track takes largest width OR height that is needed to fit the grid item content without overflowing;
+  - example `grid-template-columns: max-content 1fr 1fr min-content`: column track is set to min-content, `Loremipsum` is largest word and so largest content in grid item, now NO overflowing to right and left, BUT overflowing to bottom remains possible;
+  - if row track is also set to min-content (`grid-template-rows: repeat(2, min-content)`), then grid item content fits perfectly without any overflowing
+
+```HTML
+<div class="container">
+  <div class="item item--1">1: Hello hello hello</div>
+  <div class="item item--2">2</div>
+  <div class="item item--3">3</div>
+  <div class="item item--4">4: Ich teste und teste und code</div>
+  <div class="item item--5">5</div>
+  <div class="item item--6">6</div>
+  <div class="item item--7">7</div>
+  <div class="item item--8">8: Loremipsum ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum</div>
+</div>
+```
+
+```SCSS
+.container {
+  width: 600px;
+  height: 600px;
+  margin: 0 auto;
+  background-color: #ddd;
+
+  display: grid;
+  grid-template-rows: repeat(2, 150px);
+  grid-template-columns: max-content 1fr 1fr min-content;
+  grid-template-rows: repeat(2, min-content);
+}
+
+.item {
+  padding: 10px;
+  color: #fff;
+  background-color: red;
+
+  &--1 { background-color: red; }
+  &--2 { background-color: orange; }
+  &--3 { background-color: blue; }
+  &--4 { background-color: green; }
+  &--5 { background-color: orangered; }
+  &--6 { background-color: purple; }
+  &--7 { background-color: violet; }
+  &--8 { background-color: darkblue; }
+}
+```
+
+### Example: minmax()
+
+- `minmax()`: ensure that grid track stays between 2 defined values
+  - example `grid-template-rows: repeat(2, minmax(150px, min-content))`: row has at least height of `150px`, BUT if content is larger then grid item becomes heigher
+
+```SCSS
+.container {
+  height: 600px;
+  margin: 0 auto;
+  background-color: #ddd;
+
+  display: grid;
+
+  width: 90%;
+  grid-template-rows: repeat(2, minmax(150px, min-content));
+  grid-template-columns: minmax(200px, 50%) repeat(3, 1fr); // first col keeps 50% (-> can also use units px, fr) as long as there is enough space for all other grid tracks, only then col shrinks until min value of 200px
+}
+
+.item {
+  padding: 10px;
+  color: #fff;
+  background-color: red;
+
+  &--1 { background-color: red; }
+  &--2 { background-color: orange; }
+  &--3 { background-color: blue; }
+  &--4 { background-color: green; }
+  &--5 { background-color: orangered; }
+  &--6 { background-color: purple; }
+  &--7 { background-color: violet; }
+  &--8 { background-color: darkblue; }
+}
+```
