@@ -262,7 +262,7 @@ $gutter-horizontal: 6rem;
 }
 ```
 
-### Example: Basic Grid Layout - Version Line Numbers
+### Basic Grid Layout - V1: Line Numbers
 
 ```HTML
 <div class="container">
@@ -323,7 +323,7 @@ $gutter-horizontal: 6rem;
 }
 ```
 
-### Example: Basic Grid Layout - Version Line Names
+### Basic Grid Layout - V2: Line Names
 
 ```SCSS
 // METHOD 2: LINE NAMES
@@ -372,7 +372,7 @@ $gutter-horizontal: 6rem;
 }
 ```
 
-### Example: Basic Grid Layout - Version Name Grid Areas
+### Basic Grid Layout - V3: Name Grid Areas
 
 ```SCSS
 // METHOD 3: NAME GRID AREAS -> easy to use for small layouts
@@ -405,32 +405,15 @@ $gutter-horizontal: 6rem;
   grid-area: head; // all "head" cells in a grid track will be occupied
 }
 
-.box--1 {
-  grid-area: box-1;
-}
-
-.box--2 {
-  grid-area: box-2;
-}
-
-.box--3 {
-  grid-area: box-3;
-}
-
-.sidebar {
-   grid-area: side;
-}
-
-.main {
-  grid-area: main;
-}
-
-.footer {
-   grid-area: foot;
-}
+.box--1 { grid-area: box-1; }
+.box--2 { grid-area: box-2; }
+.box--3 { grid-area: box-3; }
+.sidebar { grid-area: side; }
+.main { grid-area: main; }
+.footer { grid-area: foot; }
 ```
 
-### Example: Explicit vs Implicit Grids
+### Explicit vs Implicit Grids
 
 - if you have more items than cells, more tracks are added and remaining items move to a new implicit grid row (or column) track
 - `grid-auto-rows`: set height of implicit row track(s)
@@ -463,6 +446,7 @@ $gutter-horizontal: 6rem;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
 
+  // implicit grid definition
   grid-auto-rows: 50px;
   grid-auto-flow: row; // [default: row] | column | row dense | column dense
   grid-auto-columns: .5fr;
@@ -475,7 +459,7 @@ $gutter-horizontal: 6rem;
 }
 ```
 
-### Example: Align Grid Items to Grid Areas
+### Align Grid Items to Grid Areas
 
 - `align-item`/`justify-item`
   - align = vertically (-> column direction)
@@ -483,7 +467,6 @@ $gutter-horizontal: 6rem;
 - `align-self`/`justify-self`: for grid items to overwrite `align-item`/`justify-item` properties of grid container
 
 ```SCSS
-// implicit vs explicit grids
 .container {
   width: 600px;
   margin: 0 auto;
@@ -517,7 +500,7 @@ $gutter-horizontal: 6rem;
 }
 ```
 
-### Example: Align Grid Tracks (-> entire content) to Grid Container
+### Align Grid Tracks (-> entire content) to Grid Container
 
 - matters if grid container is larger than grid content
 - `grid-auto-flow: row dense` -> avoid holes when algorithme arrange grid items (when they are NOT explicitly positioned) -> use `dense`
@@ -541,7 +524,6 @@ $gutter-horizontal: 6rem;
   grid-auto-flow: row dense;
 }
 
-
 .item {
   padding: 10px;
   color: #fff;
@@ -564,10 +546,12 @@ $gutter-horizontal: 6rem;
 }
 ```
 
-### Example: min-content, max-content
+### Grid: min-content, max-content
 
 - `max-content`: width of largest content of a grid item in this column or row WITHOUT line break
-- `min-content`: column OR row track takes largest width OR height that is needed to fit the grid item content without overflowing;
+- `min-content`:
+  - for column track: column takes largest width that is needed to fit the grid item content without overflowing
+  - for row track: row takes largest height that is needed to fit the grid item content without overflowing
   - example `grid-template-columns: max-content 1fr 1fr min-content`: column track is set to min-content, `Loremipsum` is largest word and so largest content in grid item, now NO overflowing to right and left, BUT overflowing to bottom remains possible;
   - if row track is also set to min-content (`grid-template-rows: repeat(2, min-content)`), then grid item content fits perfectly without any overflowing
 
@@ -613,7 +597,7 @@ $gutter-horizontal: 6rem;
 }
 ```
 
-### Example: minmax()
+### Grid: minmax()
 
 - `minmax()`: ensure that grid track stays between 2 defined values
   - example `grid-template-rows: repeat(2, minmax(150px, min-content))`: row has at least height of `150px`, BUT if content is larger then grid item becomes heigher
@@ -629,6 +613,48 @@ $gutter-horizontal: 6rem;
   width: 90%;
   grid-template-rows: repeat(2, minmax(150px, min-content));
   grid-template-columns: minmax(200px, 50%) repeat(3, 1fr); // first col keeps 50% (-> can also use units px, fr) as long as there is enough space for all other grid tracks, only then col shrinks until min value of 200px
+}
+
+.item {
+  padding: 10px;
+  color: #fff;
+  background-color: red;
+
+  &--1 { background-color: red; }
+  &--2 { background-color: orange; }
+  &--3 { background-color: blue; }
+  &--4 { background-color: green; }
+  &--5 { background-color: orangered; }
+  &--6 { background-color: purple; }
+  &--7 { background-color: violet; }
+  &--8 { background-color: darkblue; }
+}
+```
+
+### Grid: auto-fill and auto-fit to build responsive layouts
+
+- `auto-fill` creates automatically as many tracks as fit in the grid container's width (1000px/100px = 10 col tracks), also empty tracks when there are NOT enough grid items
+- `auto-fit` creates automatically as many tracks as fit in the grid container, BUT if track can NOT be filled with available grid items, then these tracks collapse to width 0
+- combined with `minmax()`, you can easily create responsive layouts
+
+```SCSS
+.container {
+  width: 1000px;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #ddd;
+
+  display: grid;
+
+  grid-template-rows: repeat(2, minmax(150px, min-content));
+  grid-template-columns: repeat(auto-fill, 100px);
+
+  grid-template-columns: repeat(auto-fit, 100px);
+
+  // combined with minmax(): according to a relative container width and with 8 grid items, until 800px width 8 col tracks are created, but if less than 800px width, then break to next row line and only 7 col tracks remain in grid
+  width: 90%;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-auto-rows: 150px; // if explicit grid is not enough for all grid items, define auto-created new track(s)
 }
 
 .item {
