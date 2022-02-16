@@ -432,6 +432,12 @@ $gutter-horizontal: 6rem;
 
 ### Example: Explicit vs Implicit Grids
 
+- if you have more items than cells, more tracks are added and remaining items move to a new implicit grid row (or column) track
+- `grid-auto-rows`: set height of implicit row track(s)
+- `grid-auto-columns`: set width of implicit col track(s) - only applies with grid-auto-flow: column
+- `grid-auto-flow: row`: default = row; change grid direction: with `column` new cols are added as implicit column track(s)
+  - `grid-auto-flow: row dense` -> avoid holes when algorithme arrange grid items (when they are NOT explicitly positioned)
+
 ```HTML
 <div class="container">
   <div class="item item--1">1</div>
@@ -457,12 +463,9 @@ $gutter-horizontal: 6rem;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
 
-  // if you don't know how many items are inserted in your grid, define implicit grid heights/widths
-  grid-auto-rows: 50px; // set height of implicit row track(s)
-  // change grid direction: with "column" whole grid goes in new direction and implicit grid is added as new column track(s)
-  grid-auto-flow: row; // [default: row] | column
-  // if you have more items than cells, more tracks are added and remaining items move to a new implicit grid row track
-  grid-auto-columns: .5fr; // set width of implicit col track(s) - only applies with grid-auto-flow: column
+  grid-auto-rows: 50px;
+  grid-auto-flow: row; // [default: row] | column | row dense | column dense
+  grid-auto-columns: .5fr;
 }
 
 .item {
@@ -472,7 +475,12 @@ $gutter-horizontal: 6rem;
 }
 ```
 
-### Example: Align Grid Items
+### Example: Align Grid Items to Grid Areas
+
+- `align-item`/`justify-item`
+  - align = vertically (-> column direction)
+  - justify = horizontally (-> row direction)
+- `align-self`/`justify-self`: for grid items to overwrite `align-item`/`justify-item` properties of grid container
 
 ```SCSS
 // implicit vs explicit grids
@@ -486,7 +494,6 @@ $gutter-horizontal: 6rem;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
 
-  // Aligning Grid Items
   align-items: center; // [default = stretch] | center | end | start; e.g. with center each item is centered vertically in its grid area, can also be a only a cell (-> works like flex-box align-items: center)
   justify-items: center; // [default = stretch] | center | end | start; e.g. start aligns item horizontally on left side in its grid area
 }
@@ -499,9 +506,55 @@ $gutter-horizontal: 6rem;
   &--4 {
     background-color: orange;
     grid-row: 2 / span 3;
-    // overwrite align-item/justify-item properties of grid container
     align-self: start;
     justify-self: start;
+  }
+
+  &--7 {
+    background-color: green;
+    grid-column: 1 / -1;
+  }
+}
+```
+
+### Example: Align Grid Tracks (-> entire content) to Grid Container
+
+- matters if grid container is larger than grid content
+- `grid-auto-flow: row dense` -> avoid holes when algorithme arrange grid items (when they are NOT explicitly positioned) -> use `dense`
+
+```SCSS
+.container {
+  width: 600px;
+  height: 600px;
+  margin: 0 auto;
+  background-color: #ddd;
+
+  display: grid;
+  grid-template-rows: repeat(6, 50px);
+  grid-template-columns: repeat(2, 200px);
+  grid-gap: 20px;
+
+  justify-content: center; // [default = start] | end | center | space-between | space-around | space-evenly -> align content horizontally (row direction)
+  align-content: center; // align content vertically (col direction)
+
+  // avoid holes in grid layout with "dense"
+  grid-auto-flow: row dense;
+}
+
+
+.item {
+  padding: 10px;
+  color: #fff;
+  background-color: red;
+
+  &--4 {
+    background-color: orange;
+    grid-row: 2 / span 3;
+  }
+
+  &--6 {
+    background-color: purple;
+    grid-row: 2 / span 2;
   }
 
   &--7 {
