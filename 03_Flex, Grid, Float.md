@@ -249,7 +249,7 @@ $gutter-horizontal: 6rem;
   &--4 {
     background-color: pink;
     grid-column: 2 / span 2; // equal to 2 / 4; span item over 2 cols
-    grid-column: 2 / -1; // -1 means that item is spannend until last col
+    grid-column: 2 / -1; // -1 means that item is spannend until last col of EXPLICIT (!) Grid
   }
 
   &--5 {
@@ -461,10 +461,10 @@ $gutter-horizontal: 6rem;
 
 ### Align Grid Items to Grid Areas
 
-- `align-item`/`justify-item`
+- `align-items`/`justify-items`
   - align = vertically (-> column direction)
   - justify = horizontally (-> row direction)
-- `align-self`/`justify-self`: for grid items to overwrite `align-item`/`justify-item` properties of grid container
+- `align-self`/`justify-self`: for grid items to overwrite `align-items`/`justify-items` properties of grid container
 
 ```SCSS
 .container {
@@ -634,7 +634,7 @@ $gutter-horizontal: 6rem;
 ### Grid: auto-fill and auto-fit to build responsive layouts
 
 - `auto-fill` creates automatically as many tracks as fit in the grid container's width (1000px/100px = 10 col tracks), also empty tracks when there are NOT enough grid items
-- `auto-fit` creates automatically as many tracks as fit in the grid container, BUT if track can NOT be filled with available grid items, then these tracks collapse to width 0
+- `auto-fit` creates automatically as many tracks as fit in the grid container, BUT if less tracks than space in container, then these tracks collapse to width 0
 - combined with `minmax()`, you can easily create responsive layouts
 
 ```SCSS
