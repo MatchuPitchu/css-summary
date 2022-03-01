@@ -509,6 +509,13 @@ nav {
   }
   ```
 
+## Layout Types
+
+- `Float`: still used, but outdated
+- `Flexbox`: laying out elements in a `1-dimensional` row; perfect for `component layout`
+  - main idea of flexbox is to give the container the ability to expand and shrink elements to best use available space
+- `CSS Grid`: laying out element in a fully-fledged `2-dimensional` grid; perfect for `page layouts and complex components`
+
 ## Responsive Design Principles
 
 - make websites useable for all kind of devices and viewports
