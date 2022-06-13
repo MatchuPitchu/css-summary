@@ -275,7 +275,12 @@ Documentation with examples: <https://sass-lang.com/guide>
     list-style: none;
 
       & li {
-      display: inline-block
+        display: inline-block;
+      }
+      
+      // to use & (ampersand) for a use case that you want to have to classes on one element, than use {&}
+      &.{&}--dark {
+       background-color: #000;
       }
     }
     ```
