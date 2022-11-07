@@ -1,0 +1,75 @@
+@use 'base' as *;
+
+// header row has height of 80vh (see grid definition of .container)
+.header {
+  grid-column: full-start / col-end 6; // name set of columns col-start x to col-end x -> use dev tools to count cols
+  // best way to create overlay
+  background-image: linear-gradient(rgba($color-secondary, 0.93), rgba($color-secondary, 0.93)),
+    url(../img/hero.jpeg);
+  background-position: center;
+  padding: 4rem 8rem 8rem 8rem;
+
+  display: grid;
+  // DYNAMIC SPACING WITH GRID:
+  // - with 1fr 1st + 4th row occupie all available space,
+  // - 2nd row occupies only its content
+  // - 3rd row has min height of 6rem and max height of min-content (-> so that a content text line fits)
+  grid-template-rows: 1fr min-content minmax(6rem, min-content) 1fr;
+  grid-template-columns: minmax(
+    min-content,
+    max-content
+  ); // here only 1 col, col has maximal width of largest content (without line-break) and minimal width of largester word of a grid item in this column
+  grid-row-gap: 1.5rem;
+  justify-content: center; // center entire grid content horizontally in grid container
+
+  @media only screen and (max-width: $bp-medium) {
+    grid-column: full-start / full-end;
+  }
+
+  @media only screen and (max-width: $bp-small) {
+    padding: 5rem;
+  }
+
+  &__logo {
+    height: 3rem;
+    justify-self: center; // center logo in its grid cell
+  }
+
+  &__btn {
+    // without these properties, grid content is stretched horizontally and vertically to full cell size
+    align-self: start;
+    justify-self: start;
+  }
+
+  // use pseudo-elements ::before and ::after as grid items to create framing lines for text
+  &__seenon-text {
+    display: grid;
+    grid-template-columns: 1fr max-content 1fr;
+    grid-column-gap: 1.5rem;
+    align-items: center;
+
+    font-size: 1.6rem;
+    color: $color-grey-light-2;
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      height: 1px;
+      background-color: currentColor; // takes current font color of element (-> color-grey-light-2)
+    }
+  }
+
+  &__seenon-logos {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+
+    img {
+      max-height: 2.5rem;
+      filter: brightness(70%); // set img darker
+    }
+  }
+}

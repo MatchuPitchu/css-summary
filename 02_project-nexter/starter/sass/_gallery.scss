@@ -1,0 +1,84 @@
+@use 'base' as *;
+
+// Hint for starting a grid gallery: take the smallest grid cell you wish to have in order to define the entire grid
+// - create wrapper container around img to apply object-fit: cover on img and cover 100% width/height of grid area
+
+.gallery {
+  grid-column: full-start / full-end;
+  background-color: $color-grey-light-1;
+
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(
+    7,
+    5vw
+  ); // bind height to viewport width to make it reponsive (other way: define height of gallery like e.g. 70vh and use 1fr to define grid rows)
+  grid-gap: 1.5rem;
+  padding: 1.5rem;
+
+  &__item {
+    &--1 {
+      grid-area: 1 / 1 / span 2 / span 2;
+    }
+
+    &--2 {
+      grid-area: 1 / 3 / span 3 / span 3;
+    }
+
+    &--3 {
+      grid-area: 1 / 6 / span 2 / 7;
+    }
+
+    &--4 {
+      grid-area: 1 / 7 / span 2 / span 2;
+    }
+
+    &--5 {
+      grid-area: 3 / 1 / span 3 / span 2;
+    }
+
+    &--6 {
+      grid-area: 4 / 3 / span 2 / span 2;
+    }
+
+    &--7 {
+      grid-area: 4 / 5 / 5 / 6;
+    }
+
+    &--8 {
+      grid-area: 3 / 6 / span 2 / span 2;
+    }
+
+    &--9 {
+      grid-area: 3 / 8 / span 3 / 9;
+    }
+
+    &--10 {
+      grid-area: 6 / 1 / span 2 / 2;
+    }
+
+    &--11 {
+      grid-area: 6 / 2 / span 2 / span 2;
+    }
+
+    &--12 {
+      grid-area: 6 / 4 / span 2 / 5;
+    }
+
+    &--13 {
+      grid-area: 5 / 5 / span 3 / span 3;
+    }
+
+    &--14 {
+      grid-area: 6 / 8 / span 2 / 9;
+    }
+  }
+
+  // img covers whole parent container (= figure element gallery__item)
+  &__img {
+    display: block; // to avoid little white space on bottom of img because of when it's treated like inline element
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

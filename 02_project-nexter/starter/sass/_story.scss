@@ -1,0 +1,77 @@
+@use 'base' as *;
+
+.story {
+  &__pictures {
+    grid-column: full-start / col-end 4;
+    background-color: $color-primary;
+    background-image: linear-gradient(rgba($color-primary, 0.5), rgba($color-primary, 0.5)),
+      url(../img/back.jpg); // bg image with overlay linear-gradient to adapt at design
+    background-size: cover;
+
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+    align-items: center; // to center image grid items that do NOT fill its entire grid area
+
+    @media only screen and (max-width: $bp-medium) {
+      grid-column: full-start / full-end;
+      padding: 6rem;
+    }
+  }
+
+  &__img--1 {
+    width: 100%;
+    // image keeps its intrinsic aspect ration, so with 100% width grid item does NOT fill whole grid area
+    grid-row: 2 / 6;
+    grid-column: 2 / 6;
+    box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.1);
+
+    @media only screen and (max-width: $bp-medium) {
+      grid-column: 1 / 5;
+      grid-row: 1 / -1;
+    }
+  }
+
+  &__img--2 {
+    // shift img over grid container with higher width and higher z-index to overlap elements on right side
+    width: 115%;
+    z-index: 1;
+    grid-row: 4 / 6;
+    grid-column: 4 / 7;
+    box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
+
+    @media only screen and (max-width: $bp-medium) {
+      width: 100%;
+      grid-row: 1 / -1;
+    }
+  }
+
+  &__content {
+    background-color: $color-grey-light-1;
+    grid-column: col-start 5 / full-end;
+    padding: 6rem 8vw; // responsive padding with vw
+
+    // VERSION 1 center content: 1-dimensional, so flex box solution
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; // default = stretch; otherwise btn would be stretched along whole width
+
+    // VERSION 2 center content: grid solution
+    // display: grid;
+    // align-content: center;
+    // justify-items: start; // default = stretch; otherwise btn would be stretched along whole width
+
+    @media only screen and (max-width: $bp-medium) {
+      grid-column: full-start / full-end;
+      // and place .story__content before .story__pictures
+      grid-row: 5 / 6;
+    }
+  }
+
+  &__text {
+    font-size: 1.5rem;
+    font-style: italic;
+    margin-bottom: 4rem;
+  }
+}

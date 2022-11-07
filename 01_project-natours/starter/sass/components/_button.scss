@@ -1,0 +1,111 @@
+@use '../abstracts/variables' as *;
+
+.btn {
+  // a pseudo-class allows to select something that cannot be expressed by a simple selector;
+  // examples: :link, :visited, :hover, :focus, :active are  -> to define in this order;
+  // define 1 generic btn class and add specific properties with specific classes
+  &,
+  &:link,
+  &:visited {
+    // by default <a> is inline element, define it as inline-block that you can set width, height, padding
+    display: inline-block;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: $default-font-size;
+    padding: 1.5rem 4rem;
+    border-radius: 10rem;
+    transition: all 0.2s; // transition prop has to be defined on initial state where a change will start
+    position: relative;
+
+    // for <button> element
+    border: none;
+    cursor: pointer;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    // box shadow: offset x axis, offset y axis, blur, color of shadow
+    box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
+
+    // when btn is hovered following pseudo-element appears
+    &::after {
+      transform: scaleX(1.4) scaleY(1.6);
+      opacity: 0; // appears like effect of fading out
+    }
+  }
+
+  // gives impression of real clicking
+  &:active,
+  &:focus {
+    outline: none; // to reset default <button> element setting
+    transform: translateY(-1px);
+    box-shadow: 0 0.5rem 1rem rgba($color-black, 0.2);
+  }
+
+  &--white {
+    background-color: $color-white;
+    color: $color-grey-dark-1;
+
+    &::after {
+      background-color: $color-white;
+    }
+  }
+
+  &--green {
+    background-color: $color-primary;
+    color: $color-white;
+
+    &::after {
+      background-color: $color-primary;
+    }
+  }
+
+  // a pseudo-element allows to create items that do not normally exist in document tree, for example ::after
+  &::after {
+    // content + display needed to make appear pseudo-element on screen
+    content: '';
+    display: inline-block;
+    // pseudo-element is treated like child of .btn - so 100% refers to dimensions of .btn
+    height: 100%;
+    width: 100%;
+    border-radius: 10rem;
+    // put pseudo-element behind current btn
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all 0.4s;
+  }
+
+  &--animated {
+    animation: 0.5s ease-out 0.75s moveInBottom;
+    // "backwards": styles of first animation step (-> 0%) will be applied before animation starts;
+    // "forwards": end step styles will remain
+    animation-fill-mode: backwards;
+  }
+}
+
+.btn-text {
+  &:link,
+  &:visited {
+    display: inline-block;
+    text-decoration: none;
+    font-size: $default-font-size;
+    color: $color-primary;
+    padding: 3px;
+    border-bottom: 1px solid $color-primary;
+    transition: all 0.2s;
+  }
+
+  &:hover {
+    background-color: $color-primary;
+    color: $color-white;
+    box-shadow: 0 1rem 2rem rgba($color-black, 0.15);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    box-shadow: 0 0.5rem 1rem rgba($color-black, 0.15);
+    transform: translateY(0px);
+  }
+}

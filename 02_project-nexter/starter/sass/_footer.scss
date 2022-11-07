@@ -1,0 +1,44 @@
+@use 'base' as *;
+
+.footer {
+  grid-column: full-start / full-end;
+  padding: 8rem;
+  background-color: $color-secondary;
+}
+
+.nav {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 2rem;
+  list-style: none;
+
+  // select links with :link and :visited pseudo-class
+  &__link:link,
+  &__link:visited {
+    min-width: 15rem;
+    display: block; // define block element to make padding/margin top and bottom possible
+    font-family: $font-display;
+    font-size: 1.4rem;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 1.5rem;
+    transition: all 0.2s;
+  }
+
+  &__link:hover,
+  &__link:active {
+    background-color: rgba(#fff, 0.05); // rgba with HEX color inside only works in SCSS
+    transform: translateY(-3px);
+  }
+}
+
+.copyright {
+  font-size: 1.4rem;
+  color: $color-grey-light-2;
+  margin: 6rem auto 0 auto;
+  text-align: center;
+  width: 70%;
+}

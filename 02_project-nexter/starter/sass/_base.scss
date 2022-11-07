@@ -1,0 +1,85 @@
+// COLOR VARIABLES
+$color-primary: #c69963;
+$color-primary-dark: #b28451;
+
+$color-secondary: #101d2c;
+
+$color-grey-light-1: #f9f7f6;
+$color-grey-light-2: #aaa;
+
+$color-grey-dark-1: #54483a;
+$color-grey-dark-2: #6d5d4b;
+
+// FONT VARIABLES
+$font-primary: 'Nunito', sans-serif;
+$font-display: 'Josefin Sans', sans-serif;
+
+// RESPONSIVE BREAKPOINTS
+$bp-largest: 75em; // 1200px | 1200px/16px = 75em -> 16px = default browser font-size
+$bp-large: 62.5em; // 1000px
+$bp-medium: 50em; // 800px
+$bp-small: 37.5em; // 600px
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%; // 1rem = 10px, 10px/16px[browser default] = 62.5%
+
+  @media only screen and (max-width: $bp-largest) {
+    font-size: 50%; // 1rem = 8px, 8px/16px[browser default] = 50%
+  }
+}
+
+body {
+  font-family: $font-primary;
+  color: $color-grey-dark-2;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+// auto is identical to max-content if it's a maximum. As a minimum it represents the largest minimum size (as specified by min-width/min-height) of the grid items occupying the grid track.
+// here: auto would be equal to min-content
+.container {
+  display: grid;
+  // use relative units for responsive layout
+  grid-template-rows: 80vh min-content 40vw repeat(3, min-content);
+  // calc of cols: your webpage container (e.g. 1140px) divided by 8 (=approx. 140px)
+  // each col should have width beteen its min content and width of 140px
+  // add sidebar as first col with fix width
+  // center cols in viewport (except sidebar): add 2 wrapping cols with each 1fr AND at least 6rem for little remaining padding for shrinked webpage
+  // advantage: use wrapping cols later for wide design elements (e.g. wide images ...)
+  // NAMING of grid areas: handy when you adjust layout with media queries, because naming remains the same, otherwise col/row numbers could change
+  grid-template-columns:
+    [sidebar-start] 8rem [sidebar-end full-start] minmax(6rem, 1fr) [center-start] repeat(
+      8,
+      [col-start] minmax(min-content, 14rem) [col-end]
+    )
+    [center-end] minmax(6rem, 1fr) [full-end];
+
+  // adjust grid definition for smaller screens,
+  // REMOVE sidebar in col definition and ADD new row for sidebar in row definition
+  @media only screen and (max-width: $bp-large) {
+    grid-template-rows: 6rem 80vh min-content 40vw repeat(3, min-content);
+    grid-template-columns:
+      [full-start] minmax(6rem, 1fr) [center-start] repeat(
+        8,
+        [col-start] minmax(min-content, 14rem) [col-end]
+      )
+      [center-end] minmax(6rem, 1fr) [full-end];
+  }
+
+  // add new row "min-content" to push realtors section to new row;
+  // enlarge header row to fill entire height with sidebar on top (100vh - 6rem);
+  // replace 40vw row with a row that has a height like to content needs it (-> min-content),
+  // but then you have only min-content rows at the end and you can delete this explicit definition,
+  // it's enough to have an implicit grid
+  @media only screen and (max-width: $bp-medium) {
+    grid-template-rows: 6rem calc(100vh - 6rem);
+  }
+}

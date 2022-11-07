@@ -1,0 +1,26 @@
+// load variables, mixins, functions from other Sass stylesheets (= modules);
+// file name is here written without underscore (_), but naming in folder is with _
+@use 'abstracts/functions';
+@use 'abstracts/mixins';
+@use 'abstracts/variables' as *; // import with * (instead of SOMENAME) to use variables without SOMENAME.$variable-name
+
+@use 'base/base';
+@use 'base/animations';
+@use 'base/typography';
+@use 'base/utilities';
+
+@use 'components/bg-video';
+@use 'components/button';
+@use 'components/card';
+@use 'components/composition';
+@use 'components/feature-box';
+@use 'components/form';
+@use 'components/popup';
+@use 'components/story';
+
+@use 'layout/footer';
+@use 'layout/grid';
+@use 'layout/header';
+@use 'layout/navigation';
+
+@use 'pages/home';

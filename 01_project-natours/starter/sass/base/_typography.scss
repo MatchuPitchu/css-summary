@@ -1,0 +1,91 @@
+@use './animations';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// overall font properties in body element to allow use of inheritance
+body {
+  font-family: Lato, sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  color: $color-grey-dark-1;
+}
+
+.heading-primary {
+  color: $color-white;
+  text-transform: uppercase;
+  // to prevent litte strange move of this box element when animations inside are finished
+  backface-visibility: hidden;
+  margin-bottom: 6rem;
+
+  // define as block elements that occupy whole line and create line breaks before and after them
+  &--main {
+    font-size: 6rem;
+    font-weight: 400;
+    display: block;
+    letter-spacing: 3.5rem;
+    // animation-timing-functions https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function
+    // animation shorthand: order is important
+    animation: 1s ease-out moveInLeft; //3s 3*/;
+    // animation-iteration-count: 3;
+    // animation-delay: 3s;
+
+    @include respond($phone) {
+      letter-spacing: 1rem;
+      font-size: 5rem;
+    }
+  }
+
+  &--sub {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1.75rem;
+    animation: 1s ease-out moveInRight;
+
+    @include respond($phone) {
+      letter-spacing: 0.5rem;
+    }
+  }
+}
+
+.heading-secondary {
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 2px;
+  transition: all 0.2s;
+  // linear gradient as background of words
+  display: inline-block; // element has only width of words
+  background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark);
+  -webkit-background-clip: text; // needed for CHROME
+  background-clip: text; // clip bg exactly to the shape of the text
+  color: transparent;
+
+  @include respond($tab-port) {
+    font-size: 3rem;
+  }
+
+  @include respond($phone) {
+    font-size: 2.5rem;
+  }
+
+  &:hover {
+    transform: skewY(2deg) skewX(15deg) scale(1.1); // skews content, not only rotating
+    text-shadow: 0.5rem 1rem 2rem rgba($color-black, 0.2);
+  }
+}
+
+.heading-tertiary {
+  font-size: $default-font-size;
+  font-size: 700;
+  text-transform: uppercase;
+}
+
+.paragraph {
+  font-size: $default-font-size;
+
+  // select everything except of last child
+  &:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+}

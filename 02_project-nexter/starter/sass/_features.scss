@@ -1,0 +1,37 @@
+@use 'base' as *;
+
+.features {
+  grid-column: center-start / center-end;
+  margin: 15rem 0;
+
+  // create subgrid
+  display: grid;
+  // VERSION 1: not responsive
+  // grid-template-columns: repeat(3, 1fr);
+  // VERSION 2: responsive that as many tracks are added as fit into the space
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+
+  // grid-template-rows: auto auto; // not needed, grid items will be placed in implicit grid and will define height of rows
+  grid-gap: 6rem;
+  align-items: start; // align grid items (-> .feature) vertically to the start of its Grid Areas
+}
+
+.feature {
+  display: grid;
+  // first col = icon width
+  grid-template-columns: min-content 1fr;
+  // grid-template-rows: auto auto; // not needed
+  grid-gap: 1.5rem 2.5rem;
+
+  &__icon {
+    grid-row: 1 / span 2;
+    fill: $color-primary;
+    width: 4.5rem;
+    height: 4.5rem;
+    transform: translateY(-1rem);
+  }
+
+  &__text {
+    font-size: 1.7rem;
+  }
+}

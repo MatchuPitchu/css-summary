@@ -1,0 +1,45 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts//mixins' as *;
+
+// use !important here to be sure, that utilities are always applied,
+// even if there were a more secific selector
+
+.u-center-text {
+  text-align: center !important;
+}
+
+.u-margin-bottom-sm {
+  margin-bottom: 1.5rem !important;
+}
+
+.u-margin-bottom-md {
+  margin-bottom: 4rem !important;
+
+  @include respond($tab-port) {
+    margin-bottom: 3rem !important;
+  }
+}
+
+.u-margin-bottom-bg {
+  margin-bottom: 8rem !important;
+
+  @include respond($tab-port) {
+    margin-bottom: 5rem !important;
+  }
+}
+
+.u-margin-top-bg {
+  margin-top: 8rem !important;
+
+  @include respond($tab-port) {
+    margin-bottom: 5rem !important;
+  }
+}
+
+.u-margin-top-huge {
+  margin-top: 10rem !important;
+
+  @include respond($tab-port) {
+    margin-bottom: 7rem !important;
+  }
+}

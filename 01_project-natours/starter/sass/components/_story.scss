@@ -1,0 +1,72 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.story {
+  width: 75%;
+  margin: 0 auto;
+  box-shadow: 0 3rem 6rem rgba($color-black, 0.1);
+  background-color: rgba($color-white, 0.6);
+  border-radius: 3px;
+  padding: 6rem;
+  font-size: $default-font-size;
+  transform: skewX(-12deg);
+
+  @include respond($tab-port) {
+    width: 100%;
+    padding: 4rem;
+    transform: skewX(0);
+  }
+
+  & > * {
+    transform: skewX(12deg);
+
+    @include respond($tab-port) {
+      transform: skewX(0);
+    }
+  }
+
+  // float image around text
+  &__shape {
+    position: relative;
+    float: left; // element "floats" on the left side of parent element when width/height is given
+    width: 15rem;
+    height: 15rem;
+    // shape-outside lets wrap text around complex objects rather than simple boxes: https://developer.mozilla.org/en-US/docs/Web/CSS/shape-outside
+    shape-outside: circle(50% at 50% 50%); // circle(RADIUS at POSTION X POSITION Y in element)
+    margin-right: 4rem;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.4);
+    transition: all 0.5s;
+  }
+
+  // hover effect with text overlay
+  &__caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: $color-white;
+    font-size: 1.7rem;
+    text-transform: uppercase;
+    text-align: center;
+    opacity: 0;
+    transition: all 0.5s;
+  }
+
+  &:hover &__caption {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  &:hover &__img {
+    transform: scale(1);
+    filter: blur(3px) brightness(80%);
+  }
+}

@@ -1,0 +1,94 @@
+@use './abstracts/mixins' as *;
+@use './base' as *;
+
+.container {
+  max-width: 120rem; // if less space in viewport, then 100% width is occupied
+  margin: 8rem auto;
+  background-color: var(--color-grey-light-1);
+  /* box-shadow: offset-x | offset-y | blur-radius | spread-radius | color */
+  box-shadow: var(--shadow-dark);
+
+  @include respond($bp-largest) {
+    margin: 0;
+    max-width: 100%;
+  }
+}
+
+.header {
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 7rem;
+  background-color: #fff;
+  border-bottom: var(--line);
+
+  @include respond($bp-smallest) {
+    flex-wrap: wrap;
+    align-content: space-around; // define positioning of content (-> all rows of flex items) in flex container
+    height: 12rem;
+  }
+}
+
+.content {
+  display: flex;
+
+  @include respond($bp-medium) {
+    flex-direction: column;
+  }
+}
+
+.sidebar {
+  flex: 0 0 18%; // always keeps 18% of space
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--color-grey-dark-1);
+}
+
+.hotel-view {
+  flex: 1; // grow to occupy remaining space
+  background-color: #fff;
+}
+
+.detail {
+  display: flex;
+  gap: 2rem 4rem;
+  font-size: 1.4rem; // will be inherited to all child elements
+  padding: 4.5rem;
+  background-color: var(--color-grey-light-1);
+  border-bottom: var(--line);
+
+  @include respond($bp-medium) {
+    padding: 3rem;
+  }
+
+  @include respond($bp-small) {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+.description {
+  flex: 0 0 60%;
+  font-size: 1.4rem;
+  padding: 3rem;
+  background-color: #fff;
+  box-shadow: var(--shadow-light);
+
+  @include respond($bp-medium) {
+    padding: 2rem;
+  }
+
+  @include respond($bp-small) {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+.user-reviews {
+  flex: 1; // occupies remaining space
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

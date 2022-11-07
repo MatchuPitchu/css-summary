@@ -1,0 +1,179 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.navigation {
+  &__checkbox {
+    display: none;
+  }
+
+  &__btn {
+    display: flex; // center menu toggle in btn
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 6rem;
+    right: 6rem;
+    width: 7rem; // greater than background to it completely
+    height: 7rem;
+    border-radius: 50%;
+    background-color: $color-white;
+    box-shadow: 0 1rem 3rem rgba($color-black, 0.1);
+    cursor: pointer;
+    z-index: 200; // btn is on top of everything, then nav opened, then background for menu btn, then webpage
+
+    @include respond($tab-port) {
+      top: 2rem;
+      right: 2rem;
+    }
+  }
+
+  &__background {
+    position: fixed; // takes element out of the flow, like absolute, and remains fixed at one position while scrolling
+    top: 6.5rem;
+    right: 6.5rem;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    // radial gradient starts from middle of element to outside
+    background-image: radial-gradient($color-primary-light, $color-primary-dark);
+    z-index: 100;
+    transition: transform 0.8s cubic-bezier(0.78, 0.12, 0.46, 0.81); // https://cubic-bezier.com OR https://easings.net/de
+
+    @include respond($tab-port) {
+      top: 2.5rem;
+      right: 2.5rem;
+    }
+  }
+
+  &__nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    z-index: 150;
+    // hide nav menu with no width at this moment
+    width: 0;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.78, 0.12, 0.46, 0.81); // https://cubic-bezier.com OR https://easings.net/de
+  }
+
+  &__list {
+    counter-reset: item; // custom numbering
+    list-style: none;
+    text-align: center;
+    width: 100%;
+  }
+
+  &__item {
+    margin: 1rem;
+  }
+
+  // NICE HOVER EFFECT FOR LINKS
+  &__link {
+    &::before {
+      display: inline-block;
+      content: '0' counter(item); // custom numbering
+      counter-increment: item;
+      font-size: 3rem;
+      font-weight: 300;
+      color: $color-white;
+      margin-right: 1rem;
+    }
+
+    &:link,
+    &:visited {
+      display: inline-block; // otherwise transform does NOT apply
+      font-size: 3rem;
+      font-weight: 300;
+      color: $color-white;
+      text-decoration: none;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      // SOLID LINEAR GRADIENT FOR HOVER EFFECT
+      background-image: linear-gradient(120deg, transparent 0%, transparent 50%, $color-white 50%);
+      background-size: 250%; // choose big size, so that only first color is visible, when hovering bg-position swips to second color
+      transition: all 0.4s;
+    }
+
+    &:hover,
+    &:active {
+      background-position: right; // or 100%; move bg on horizontal axis to left
+      color: $color-primary;
+      transform: translateX(1rem);
+    }
+
+    &:hover::before {
+      color: $color-primary;
+    }
+  }
+
+  // FUNCTIONALITY
+  // if click on checkbox label (= checkbox checked), bg is scaled and nav menu shown via general sibling selector ~
+  &__checkbox:checked ~ &__background {
+    transform: scale(80);
+  }
+
+  &__checkbox:checked ~ &__nav {
+    opacity: 1;
+    width: 100vw;
+  }
+
+  // ICON HAMBURGER
+  &__icon {
+    position: relative;
+
+    &,
+    &::before,
+    &::after {
+      width: 3rem;
+      height: 2px;
+      background-color: $color-grey-dark-3;
+      display: inline-block;
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      transition: all 0.2s;
+    }
+
+    &::before {
+      top: -0.8rem;
+    }
+
+    &::after {
+      top: 0.8rem;
+    }
+  }
+
+  &__btn:hover &__icon::before {
+    top: -1rem;
+    // define point around which transformations of element goes: https://developer.mozilla.org/de/docs/Web/CSS/transform-origin
+    // transform-origin: center center;
+  }
+
+  &__btn:hover &__icon::after {
+    top: 1rem;
+  }
+
+  // if checkbox checked, use adjacent sibling selector to select btn
+  &__checkbox:checked + &__btn > &__icon {
+    background-color: transparent; // DON'T change height since pseudo-elements depend on it
+  }
+
+  // rotate to x effect
+  &__checkbox:checked + &__btn > &__icon::before {
+    top: 0;
+    transform: rotate(135deg);
+  }
+
+  &__checkbox:checked + &__btn > &__icon::after {
+    top: 0;
+    transform: rotate(-135deg);
+  }
+}

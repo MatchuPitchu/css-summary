@@ -1,0 +1,44 @@
+@use './variables' as *;
+
+@mixin absoluteFlexboxCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// MEDIA QUERY MANAGEMENT
+/*
+0 - 600px: Phone
+600 - 900px: Tablet portrait
+900 - 1200px: Tablet landscape
+[1200 - 1800px: normal styles]
+1800px +: big Desktop
+
+$breakpoint arguments
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+use relative unit for media query, so if user changes browser's font-size, 
+this is automatically taken for breakpoints
+
+in media query declaration: 1em = 16px
+*/
+
+@mixin respond($breakpoint) {
+  @if $breakpoint <= $tab-land {
+    // 1rem AND 1em in media query definition are always equal to default browser font-size (-> 16px)
+    // recommendation: em is best unit for media query after some experiences;
+    // max-width is calculated based on passed-in breakpoint and default browser font-size (-> 16px)
+    @media only screen and (max-width: calc(calc($breakpoint / 16px) * 1em)) {
+      // @content contains all childs, so media query mixin acts like wrapper
+      @content;
+    }
+  } @else {
+    // for big desktops, min-width is needed
+    @media only screen and (min-width: calc(calc($breakpoint / 16px) * 1em)) {
+      @content;
+    }
+  }
+}

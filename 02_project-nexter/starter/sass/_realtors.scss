@@ -1,0 +1,49 @@
+@use 'base' as *;
+
+.realtors {
+  background-color: $color-secondary;
+  grid-column: col-start 7 / full-end;
+  padding: 3rem;
+
+  display: grid;
+  // center grid content in this grid container
+  align-content: center;
+  justify-content: center;
+  // center every grid item in its grid cell
+  justify-items: center;
+  grid-row-gap: 2rem;
+
+  @media only screen and (max-width: $bp-medium) {
+    grid-column: full-start / full-end;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: min-content max-content; // min-content to fit img width, max-content to have text without line-breaks
+    grid-gap: 5vh 2rem; // use vh to have more spacing between rows on really huge screens
+    align-items: center; // align grid items vertically in this grid container
+
+    @media only screen and (max-width: $bp-medium) {
+      grid-template-columns: repeat(
+        3,
+        min-content max-content
+      ); // this creates 6 cols -> 3*(min-content max-content)
+    }
+
+    @media only screen and (max-width: $bp-small) {
+      grid-template-columns: min-content max-content; // position like at the beginning
+    }
+  }
+
+  &__img {
+    width: 7rem;
+    border-radius: 50%;
+    display: block; // recommended to display images as block
+  }
+
+  &__sold {
+    text-transform: uppercase;
+    color: $color-grey-light-2;
+    margin-top: -3px;
+  }
+}

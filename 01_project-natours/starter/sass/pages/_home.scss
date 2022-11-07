@@ -1,0 +1,115 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.section-about {
+  background-color: $color-grey-light-1;
+  padding: 35rem 0;
+  margin-top: -20vh; // move section up until polygon clipath corner of hero image
+}
+
+.section-features {
+  padding: 20rem 0;
+  // gradient need background-image as property
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8)
+    ),
+    url(../img/nat-4.jpg);
+  background-size: cover;
+  margin-top: -15rem;
+  transform: skewY(-7deg); // skew whole section
+
+  & > * {
+    transform: skewY(7deg); // reset skew for all direct child elements
+  }
+
+  @include respond($tab-port) {
+    padding: 10rem 0;
+
+    & > .row {
+      max-width: 50rem;
+    }
+  }
+}
+
+.section-tours {
+  background-color: $color-grey-light-1;
+  padding: 25rem 0 15rem 0;
+  margin-top: -15rem; // move section up
+
+  @include respond($tab-port) {
+    padding: 25rem 0 5rem 0;
+
+    & > .row {
+      max-width: 50rem;
+    }
+  }
+}
+
+.section-stories {
+  padding: 15rem 0;
+  position: relative; // needed for bg-video inside section
+
+  @include respond($tab-port) {
+    padding: 10rem 0;
+  }
+}
+
+.section-book {
+  padding: 15rem 0;
+  background-image: linear-gradient(to right bottom, $color-primary-light, $color-primary-dark);
+
+  @include respond($tab-port) {
+    padding: 10rem 0;
+  }
+}
+
+.book {
+  // SOLID COLOR GRADIENT FOR BACKGROUND-IMAGES
+  // gradient on top of the img; x% after color to declare at which point color is fully achieved;
+  // rectangle effect because of degree angle
+  background-image: linear-gradient(
+      105deg,
+      rgba($color-white, 0.9) 0%,
+      rgba($color-white, 0.9) 50%,
+      transparent 50%
+    ),
+    url(../../img/nat-10.jpg);
+  background-size: cover;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 3px;
+  box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+
+  @include respond($tab-land) {
+    background-image: linear-gradient(
+        105deg,
+        rgba($color-white, 0.9) 0%,
+        rgba($color-white, 0.9) 70%,
+        transparent 70%
+      ),
+      url(../../img/nat-10.jpg);
+  }
+
+  @include respond($tab-port) {
+    background-image: linear-gradient(
+        to right,
+        rgba($color-white, 0.9) 0%,
+        rgba($color-white, 0.9) 100%
+      ),
+      url(../../img/nat-10.jpg);
+  }
+
+  &__form {
+    width: 50%;
+
+    @include respond($tab-land) {
+      width: 70%;
+    }
+
+    @include respond($tab-port) {
+      width: 100%;
+    }
+  }
+}

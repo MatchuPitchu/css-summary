@@ -1,0 +1,65 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// how to write flexbox grid mobile first: https://www.taniarascia.com/easiest-flex-grid-ever/
+.grid {
+  display: flex;
+  flex-direction: column;
+  row-gap: $gutter-vertical;
+}
+
+.row {
+  display: flex;
+  flex-flow: row nowrap;
+  row-gap: $gutter-vertical;
+  column-gap: $gutter-horizontal;
+  width: 100%;
+  max-width: 114rem; // 1rem = 10px (root font-size);
+  margin: 0 auto;
+
+  .col-1-of-2 {
+    flex: 1;
+  }
+
+  .col-1-of-3 {
+    flex: 1;
+  }
+
+  .col-2-of-3 {
+    flex: 2;
+  }
+
+  .col-1-of-4 {
+    flex: 1;
+  }
+
+  .col-2-of-4 {
+    flex: 2;
+  }
+
+  .col-3-of-4 {
+    flex: 3;
+  }
+}
+
+@include respond($tab-land) {
+  .grid {
+    row-gap: $gutter-vertical-sm;
+  }
+
+  .row {
+    flex-flow: row wrap;
+    max-width: 80rem;
+    padding: 0 3rem;
+
+    [class^='col-'] {
+      flex-basis: 100%;
+    }
+  }
+}
+
+@include respond($tab-port) {
+  .row {
+    max-width: auto;
+  }
+}

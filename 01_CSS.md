@@ -244,7 +244,7 @@ Algorithm that calculates boxes and determines the layout of these boxes, for ea
 
 Documentation with examples: <https://sass-lang.com/guide>
 
-- global npm package to compile Sass on Computer: `npm install -g sass`
+- install `sass` as `dev` dependency in your project: `npm i sass --save-dev`
 - define `script` in `package.json` for compiling Sass file(s) to CSS file(s) and watch changes in Sass when saving it
 
 ```JSON
@@ -277,7 +277,7 @@ Documentation with examples: <https://sass-lang.com/guide>
       & li {
         display: inline-block;
       }
-      
+
       // to use & (ampersand) for a use case that you want to have to classes on one element, than use {&}
       &.{&}--dark {
        background-color: #000;

@@ -1,0 +1,70 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.footer {
+  background-color: $color-grey-dark-3;
+  font-size: 1.4rem;
+  color: $color-grey-light-1;
+  padding: 10rem 0;
+
+  @include respond($tab-port) {
+    padding: 4rem 0;
+  }
+
+  &__logo-box {
+    text-align: center; // applies to all nested inline elements (like img footer__logo)
+    margin-bottom: 8rem;
+
+    @include respond($tab-port) {
+      margin-bottom: 6rem;
+    }
+  }
+
+  &__logo {
+    width: 15rem;
+    height: auto;
+  }
+
+  &__navigation {
+    display: inline-block; // to stop border line with end of element's content
+    border-top: 1px solid $color-grey-dark-1;
+    padding-top: 2rem;
+
+    @include respond($tab-port) {
+      display: block;
+    }
+  }
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  &__link {
+    &:link,
+    &:visited {
+      display: inline-block; // by default links are inline elements, so transform property would NOT apply
+      color: $color-grey-light-1;
+      background-color: $color-grey-dark-3;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: all 0.2s;
+    }
+
+    // active means when it's clicked
+    &:hover,
+    &:active {
+      color: $color-primary;
+      box-shadow: 0 1rem 2rem rgba($color-black, 0.4);
+      transform: rotate(5deg) scale(1.3);
+    }
+  }
+
+  &__copyright {
+    border-top: 1px solid $color-grey-dark-1;
+    padding-top: 2rem;
+  }
+}

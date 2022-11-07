@@ -1,0 +1,6 @@
+@use './variables' as *;
+
+// returns base font size for document in %
+@function base-font-size($pixels) {
+  @return percentage(calc($pixels / 16px));
+}

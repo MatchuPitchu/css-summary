@@ -1,0 +1,66 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// layout element since on every page I could have this header as a layout basis
+.header {
+  position: relative;
+  height: 85vh;
+  // use comma to define 2 bgs one on top of the other (gradient on top of bg img)
+  // gradient colors use opacity, so that img is visible
+  background-image: linear-gradient(
+      to right bottom,
+      rgba($color-primary-light, 0.8),
+      rgba($color-primary-dark, 0.8)
+    ),
+    url(../img/hero-small.jpg);
+  background-size: cover; // whatever width of viewport, img will fit always fit element
+  background-position: top;
+
+  @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+    // define polygone coordinates in which element is still visible;
+    // coordinates goes clockwise from top left (-> x = 0, y = 0) corner on
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+    height: 95vh;
+  }
+
+  // switch background images depending on the screen resolution (dpi) and width; comma stands for OR
+  // -webkit-min-device-pixel-ratio is for Safari since min-resolution is NOT working there
+  @media only screen and (min-resolution: 192dpi) and (min-width: 600px),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 600px),
+    only screen and (min-width: 2000px) {
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color-secondary-light, 0.8),
+        rgba($color-secondary-dark, 0.8)
+      ),
+      url(../img/hero.jpg);
+  }
+
+  @include respond($phone) {
+    clip-path: polygon(0 0, 100% 0, 100% 85vh, 0 100%);
+  }
+
+  // &__... means .header__logo-box -> so you can use nesting placeholder "&" for BEM pattern
+  &__logo-box {
+    position: absolute;
+    // position starts at top left corner of first PARENT element that can find with position: relative
+    top: 4rem;
+    left: 4rem;
+  }
+
+  &__logo {
+    height: 3.5rem;
+  }
+
+  // center content
+  &__text-box {
+    position: absolute;
+    top: 40%; // means that element starts exactly at this point
+    left: 50%;
+    // to center exactly in middle, have to use translate(x, y);
+    // that refers to element itself: -50% means half of element width OR height to left OR top*/
+    transform: translate(-50%, -50%);
+    text-align: center; // centers all inline elements (e.g. text, but also <a>)
+  }
+}

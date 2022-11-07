@@ -1,0 +1,48 @@
+@use '../abstracts/variables' as *; // import with * (instead of SOMENAME) to use variables without SOMENAME.$variable-name
+@use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
+
+// reset to have same appearance on every browser, also add all pseudo-elements
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; // box-sizing is not inherited by default, but I can set inheritance for every element on page
+}
+
+html {
+  // 1rem = 10px -> define root font-size of 1rem: often used workaround for better rem calcs, set it to 10px
+  // 10px/16px = 62.5% -> % is based on default browser font size 16px; but user can set his desired root font size in browser settings
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+
+  // mixin for breakpoints
+  // Notice: order -> larger @media before lower @media width; since order determines which rule will be applied in case of duplicate properties
+  @include respond($big-desktop) {
+    font-size: base-font-size(12px);
+  }
+
+  @include respond($tab-land) {
+    font-size: base-font-size(9px);
+  }
+
+  @include respond($tab-port) {
+    font-size: base-font-size(8px);
+  }
+}
+
+body {
+  box-sizing: border-box; // padding + borders are NO longer added to box width and hight
+  padding: 3rem; // space arround entire webpage
+
+  @include respond($tab-port) {
+    padding: 0;
+  }
+}
+
+// change styling when user selects text on webpage
+::selection {
+  background-color: $color-primary;
+  color: $color-white;
+}

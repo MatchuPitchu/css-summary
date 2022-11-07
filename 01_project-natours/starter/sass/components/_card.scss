@@ -1,0 +1,234 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// rotation effect on hovering card to have 2 sides of a card
+.card {
+  // FUNCTIONALITY
+  position: relative;
+  height: 52rem; // without it, row would have no height at all since all nestedelements are absolute
+  // defines how far object is away from user;
+  // lower value results in more intensive 3D effect than higher value
+  perspective: 150rem;
+
+  &__side {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 52rem;
+    font-size: 2rem;
+    border-radius: 3px;
+    // hidden: for nested bg-img .card__picture to keep the rounded corners of card
+    overflow: hidden;
+    box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+    -webkit-backface-visibility: hidden; // property needs prefix (see caniuse.com)
+    backface-visibility: hidden; // hides the backpart of the card: https://developer.mozilla.org/en-US/docs/Web/CSS/backface-visibility
+    transition: all 1s ease;
+
+    &--front {
+      background-color: $color-white;
+    }
+
+    &--back {
+      transform: rotateY(180deg); // backside is already rotated in the beginning
+
+      &-1 {
+        background-image: linear-gradient(
+          to right bottom,
+          $color-secondary-light,
+          $color-secondary-dark
+        );
+      }
+
+      &-2 {
+        background-image: linear-gradient(
+          to right bottom,
+          $color-primary-light,
+          $color-primary-dark
+        );
+      }
+
+      &-3 {
+        background-image: linear-gradient(
+          to right bottom,
+          $color-tertiary-light,
+          $color-tertiary-dark
+        );
+      }
+    }
+  }
+
+  // when card hovered, frontside and backside will be transformed
+  &:hover &__side--front {
+    transform-style: preserve-3d;
+    transform: rotateY(-180deg);
+  }
+
+  &:hover &__side--back {
+    transform: rotateY(0);
+  }
+
+  // FRONT SIDE STYLING
+  &__picture {
+    background-size: cover;
+    height: 23rem;
+    background-blend-mode: screen; // if you use 2 bgs with background-image (gradient + url), css property to blend them
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+
+    &--1 {
+      background-image: linear-gradient(
+          to right bottom,
+          $color-secondary-light,
+          $color-secondary-dark
+        ),
+        url(../../img/nat-5.jpg); // url is relative to css(!) folder with compiled code
+    }
+
+    &--2 {
+      background-image: linear-gradient(to right bottom, $color-primary-light, $color-primary-dark),
+        url(../../img/nat-6.jpg);
+    }
+
+    &--3 {
+      background-image: linear-gradient(
+          to right bottom,
+          $color-tertiary-light,
+          $color-tertiary-dark
+        ),
+        url(../../img/nat-7.jpg);
+    }
+  }
+
+  &__heading {
+    position: absolute;
+    top: 12rem;
+    right: 2rem;
+    font-size: 2.8rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    text-align: right;
+    color: #fff;
+    width: 70%;
+  }
+
+  &__heading-span {
+    padding: 1rem 1.5rem;
+    // defines how element's fragments are rendered when broken across multiple lines, columns or pages
+    // clone: all declared properties are taken for all fragments
+    box-decoration-break: clone;
+
+    &--1 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-secondary-light, 0.85),
+        rgba($color-secondary-dark, 0.85)
+      );
+    }
+
+    &--2 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-light, 0.85),
+        rgba($color-primary-dark, 0.85)
+      );
+    }
+
+    &--3 {
+      background-image: linear-gradient(
+        to right bottom,
+        rgba($color-tertiary-light, 0.85),
+        rgba($color-tertiary-dark, 0.85)
+      );
+    }
+  }
+
+  &__details {
+    padding: 3rem;
+
+    ul {
+      list-style: none;
+      width: 80%;
+      margin: 0 auto;
+
+      li {
+        text-align: center;
+        font-size: 1.5rem;
+        padding: 1rem;
+
+        // all except last child
+        &:not(:last-child) {
+          border-bottom: 1px solid $color-grey-light-2;
+        }
+      }
+    }
+  }
+
+  // BACK SIDE STYLING
+  &__cta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  &__price-box {
+    color: #fff; // nested elements inherit this
+    text-align: center;
+    margin-bottom: 8rem;
+  }
+
+  &__price-only {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+  }
+
+  &__price-value {
+    font-size: 6rem;
+    font-weight: 300; // big sized font looks better with less weight
+  }
+
+  // @include respond($tab-port) {
+  // use additional media query to detect if user can hover on his device or not (iPads etc.)
+  @media only screen and (max-width: calc(calc($tab-port / 16px) * 1em)),
+    only screen and (hover: none) {
+    height: auto;
+    border-radius: 3px;
+    background-color: $color-white;
+    box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+
+    &__side {
+      position: relative;
+      height: auto;
+      box-shadow: none;
+
+      &--back {
+        transform: rotateY(0);
+        clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+      }
+    }
+
+    &:hover &__side--front {
+      transform: rotateY(0);
+    }
+
+    &__details {
+      padding: 1rem 3rem;
+    }
+
+    // BACK SIDE STYLING
+    &__cta {
+      height: auto;
+      padding: 7rem 4rem 4rem 4rem;
+      border-radius: 0;
+    }
+
+    &__price-box {
+      margin-bottom: 2rem;
+    }
+
+    &__price-value {
+      font-size: 4rem;
+    }
+  }
+}

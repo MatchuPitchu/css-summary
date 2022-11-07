@@ -1,0 +1,115 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.form {
+  padding: 3rem;
+
+  &__group:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  &__input {
+    display: block; // default is inline element
+    font-family: inherit; // input elements do NOT inherit font-family + color, have to specify it
+    color: inherit;
+    font-size: 1.5rem;
+    width: 90%;
+    padding: 1.5rem 2rem;
+    border-radius: 2px;
+    background-color: rgba($color-white, 0.5);
+    border: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+
+    @include respond($tab-port) {
+      width: 100%;
+      padding: 1rem;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
+      border-bottom: 3px solid $color-primary;
+    }
+
+    // input is focused with invalid input according to html attributes
+    &:focus:invalid {
+      border-bottom: 3px solid $color-secondary-dark;
+    }
+
+    &::placeholder {
+      color: $color-grey-dark-2;
+    }
+  }
+
+  &__label {
+    display: block; // default is inline block
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-left: 2rem;
+    margin-top: 0.7rem;
+    transition: all 0.3s;
+  }
+
+  // CREATE CUSTOM RADIO or CHECKBOX BUTTON
+  // select input if placeholder text is shown (-> no input yet)
+  // adjacent sibling selector + ... (only NEXT sibling is selected)
+  &__input:placeholder-shown + &__label {
+    opacity: 0; // opacity set to 0 since that can be animated, visibility can NOT
+    visibility: hidden; // element is removed from DOM
+    transform: translateY(-4rem);
+  }
+
+  &__group--radio {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 2rem;
+  }
+
+  &__radio-group {
+    display: flex;
+    align-items: center;
+  }
+
+  &__radio-input {
+    display: none;
+  }
+
+  &__radio-label {
+    display: flex;
+    align-items: center;
+    font-size: $default-font-size;
+    cursor: pointer;
+  }
+
+  &__radio-button {
+    display: inline-block;
+    position: relative;
+    height: 2rem;
+    width: 2rem;
+    border: 3px solid $color-primary;
+    border-radius: 50%;
+    margin-right: 1rem;
+
+    // inner element circle
+    &::before {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      height: 1rem;
+      width: 1rem;
+      border-radius: 50%;
+      background-color: $color-primary;
+      opacity: 0;
+      transition: all 0.2s;
+    }
+  }
+
+  // general sibling selector ~
+  &__radio-input:checked ~ &__radio-label > &__radio-button::before {
+    opacity: 1;
+  }
+}
