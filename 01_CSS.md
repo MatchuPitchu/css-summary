@@ -4,7 +4,7 @@
 
 - HTML-Entities Sonderzeichen Symbole: <http://unicode.e-workers.de/entities.php>
 
-  ```HTML
+  ``html
   <p>&rarr; Pfeil</p>
   <p>&times; x</p>
   ```
@@ -90,51 +90,55 @@ Browser:
   - e) `Used value`: final calculations, based on layout (e.g. `percentage` depends on the layout)
   - f) `Actual value`: browsers and devices have destrictions, so usually values are rounded (-> `184.8px` to `185px`)
 
-  ```HTML
+  ``html
   <!-- Example -->
   <div class='section'>
     <p class='amazing'>CSS</p>
   </div>
   ```
 
-  ```CSS
+  ``css
   .section {
-    font-size: 1.5rem;
-    width: 280px;
-    background-color: red;
+  font-size: 1.5rem;
+  width: 280px;
+  background-color: red;
   }
 
   p {
-    /* font-size here is inherited from parent element, that has declared value of 1.5rem */
-    width: 140px;
-    background-color: green;
+  /_ font-size here is inherited from parent element, that has declared value of 1.5rem _/
+  width: 140px;
+  background-color: green;
   }
 
   .amazing {
-    width: 66%
+  width: 66%
   }
+
+  ```
+
   ```
 
 ## Units Conversion From Relative To Absolute (px)
 
-```CSS
+``css
 html, body {
-  font-size: 16px;
-  width: 80vw;
+font-size: 16px;
+width: 80vw;
 }
 
 header {
-  font-size: 150%; /* 24px */
-  padding: 2em; /* 48px */
-  margin-bottom: 10rem; /* 160px */
-  height: 90vh;
-  width: 1000px
+font-size: 150%; /_ 24px _/
+padding: 2em; /_ 48px _/
+margin-bottom: 10rem; /_ 160px _/
+height: 90vh;
+width: 1000px
 }
 
 .header-child {
-  font-size: 3em; /* 72px */
-  padding: 10% /* 100px */
+font-size: 3em; /_ 72px _/
+padding: 10% /_ 100px _/
 }
+
 ```
 
 - % font-size: `x% * parent's computed font-size`
@@ -155,7 +159,7 @@ header {
 - `inherit` keyword forces inheritance for certain property
 - `initial` keyword resets property to its initial value
 
-```CSS
+``css
 .parent {
   font-size: 20px;
   line-height: 150%;
@@ -207,15 +211,16 @@ Algorithm that calculates boxes and determines the layout of these boxes, for ea
   - Element: part of a block that has no standalone meaning
   - Modifier: different version of block or element
 
-  ```CSS
+  ``css
   .block {}
-  .block__element {}
-  .block__element--modifier {}
+  .block**element {}
+  .block**element--modifier {}
+
   ```
 
   - `Attention` (teacher did NOT have correct usage of modifiers): you can NOT use modifier on its own, it must modify the block/element main class. For example:
 
-  ```HTML
+  ``html
   <h1 class="heading-primary heading-primary--rounded heading-primary--orange">
       ...
   </h1>
@@ -260,7 +265,7 @@ Documentation with examples: <https://sass-lang.com/guide>
 
   - `Variables`: reusable values like colors, font-sizes, spacing etc.
 
-    ```SCSS
+    ```scss
     $color-primary: #f9ed69; // in Sass you can write comments like in JS
 
     p {
@@ -270,7 +275,7 @@ Documentation with examples: <https://sass-lang.com/guide>
 
   - `Nesting`: to nest selectors inside of one another to write less code
 
-    ```SCSS
+    ```scss
     .nav {
     list-style: none;
 
@@ -289,7 +294,7 @@ Documentation with examples: <https://sass-lang.com/guide>
   - `Partials and imports`: to write CSS in different files and import them all into 1 single file
   - `Mixins`: write reusable pieces of CSS code
 
-    ```SCSS
+    ```scss
     // reusable piece of code, reuse it with @include NAME;
     // can pass argument into mixin with @include NAME(arg)
     @mixin style-link-text($color) {
@@ -307,7 +312,7 @@ Documentation with examples: <https://sass-lang.com/guide>
 
     - CSS built-in function `calc()` it also good option: to use Sass variable in `calc(#{$variable-name})`
 
-    ```SCSS
+    ```scss
     // declare a function
     @function divide($a, $b) {
       @return $a / $b;
@@ -323,7 +328,7 @@ Documentation with examples: <https://sass-lang.com/guide>
     - difference to mixin: extension is NOT copied to the position where `@extend` is called (so multiple times copy of same code), it is the inverse direction: selector, where `@extend` is used, is copied to `%NAME definition`
     - attention: only use @extend in selectors which are consistently related to each other, otherwise you could have a maintenance problem
 
-    ```SCSS
+    ```scss
     // define extension with %NAME { ... }, use it with @extend %NAME;
     %btn-placeholder {
       text-align: center;
@@ -396,7 +401,8 @@ Documentation with examples: <https://sass-lang.com/guide>
 
 ### Basic Summary - Example
 
-```HTML
+``html
+
 <nav>
   <ul class='navigation'>
     <li><a href='#'>About us</a></li>
@@ -409,9 +415,9 @@ Documentation with examples: <https://sass-lang.com/guide>
 </nav>
 ```
 
-```SCSS
+```scss
 $color-primary: #f9ed69; // yellow
-$color-secondary: #FF794A; // orange
+$color-secondary: #ff794a; // orange
 $color-text-dark: #333;
 $color-text-light: #eee;
 
@@ -436,7 +442,6 @@ nav {
   display: flex;
   justify-content: space-between;
 }
-
 
 .navigation {
   list-style: none;
@@ -506,7 +511,7 @@ nav {
 
   - when check for -webkit- (-> prefix) then check also for property without prefix
 
-  ```SCSS
+  ```scss
   @supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px); // NOT working in Firefox
@@ -569,7 +574,7 @@ nav {
 
   - `src`: add attribute for old browsers that don't understand `srcset`
 
-    ```HTML
+    ``html
     <img
       srcset="img/nat-1.jpg 300w, img/nat-1-large.jpg 1000w"
       sizes="(max-width: 900px) 20vw,
@@ -580,13 +585,16 @@ nav {
       src="img/nat-1-large.jpg"
       loading="lazy"
     />
+
+    ```
+
     ```
 
 - `density switching`: decrease img resolution of an img of the same size
 
   - `density descriptor`: 1x/2x according to screen (high-/low-res) of user, `src` is fallback for old browsers that don't understand `srcset`
 
-    ```HTML
+    ``html
     <img
       srcset="img/logo-green-1x.png 1x, img/logo-green-2x.png 2x"
       alt="Full logo"
@@ -594,6 +602,9 @@ nav {
       src="img/logo-green-1x.png"
       loading="lazy"
     />
+
+    ```
+
     ```
 
 - `art direction`: different img for large and small screen
@@ -601,7 +612,7 @@ nav {
   - changing images with `<picture>`
   - media attribute in `<source>` stands for media condition; if query does NOT match, then fallback (-> `<img .../>`) is displayed
 
-  ```HTML
+  ``html
   <picture class="footer__logo">
     <source
       srcset="img/logo-green-small-1x.png 1x, img/logo-green-small-2x.png 2x"
@@ -629,24 +640,27 @@ nav {
 
   - use `media query` to switch background images e.g. depending on screen resolution (dpi) and width
 
-    ```CSS
+    ``css
     .header {
-      background-image: linear-gradient(
-          to right bottom,
-          rgba($color-primary-light, 0.8),
+    background-image: linear-gradient(
+    to right bottom,
+    rgba($color-primary-light, 0.8),
           rgba($color-primary-dark, 0.8)
-        ),
-        url(../img/hero-small.jpg);
+    ),
+    url(../img/hero-small.jpg);
     }
-    /* comma stands for OR */
+    /_ comma stands for OR _/
     @media (min-resolution: 192dpi) and (min-width: 600px), (min-width: 2000px) {
-      .header {
-        background-image: linear-gradient(
-            to right bottom,
-            rgba($color-primary-light, 0.8),
+    .header {
+    background-image: linear-gradient(
+    to right bottom,
+    rgba($color-primary-light, 0.8),
             rgba($color-primary-dark, 0.8)
-          ),
-          url(../img/hero.jpg);
-      }
+    ),
+    url(../img/hero.jpg);
     }
+    }
+
+    ```
+
     ```

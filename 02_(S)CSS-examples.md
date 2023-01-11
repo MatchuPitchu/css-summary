@@ -1,8 +1,75 @@
 # Hints: Nice CSS Properties
 
+## Animate height of element using CSS Grid
+
+> Article: <https://www.stefanjudis.com/snippets/how-to-animate-height-with-css-grid/>
+
+```html
+<div class="collapsable" data-collapsable>
+  <header class="collapsable__header">
+    <h3 class="collapsable__title">
+      <button type="button" data-collapsable-trigger>Title</button>
+    </h3>
+  </header>
+  <div class="collapsable__panel">
+    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+  </div>
+</div>
+```
+
+```scss
+.collapsable {
+  display: grid;
+  grid-template-rows: min-content 0fr;
+  transition: grid-template-rows 0.75s;
+
+  &.is-open {
+    grid-template-rows: min-content 1fr;
+  }
+}
+
+.collapsable__panel {
+  overflow: hidden;
+}
+
+// Styles below are NOT functional
+.collapsable {
+  border: 1px solid #bbb;
+}
+
+.collapsable__header button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  padding: 12px;
+  text-align: left;
+  cursor: pointer;
+
+  &::after {
+    content: '▼';
+
+    .collapsable.is-open & {
+      content: '▲';
+    }
+  }
+}
+
+.collapsable__panel {
+  padding: 0 12px;
+
+  > *:last-child {
+    margin-bottom: 12px;
+  }
+}
+```
+
 ## Mixins to dynamically define media queries
 
-```SCSS
+```scss
 @use './variables' as *;
 
 @mixin absoluteFlexboxCenter {
@@ -51,7 +118,7 @@ in media query declaration: 1em = 16px
 
 ## Change Styling when user selects text on webpage
 
-```SCSS
+```scss
 ::selection {
   background-color: $color-primary;
   color: $color-white;
@@ -60,17 +127,13 @@ in media query declaration: 1em = 16px
 
 ## Linear Gradient and clip-path property
 
-```SCSS
+```scss
 .header {
   position: relative;
   height: 85vh;
   // use comma to define 2 bgs one on top of the other (gradient on top of bg img)
   // gradient colors use opacity, so that img is visible
-  background-image: linear-gradient(
-      to right bottom,
-      rgba($color-primary-light, 0.8),
-      rgba($color-primary-dark, 0.8)
-    ),
+  background-image: linear-gradient(to right bottom, rgba($color-primary-light, 0.8), rgba($color-primary-dark, 0.8)),
     url(../img/image.jpg);
   background-size: cover; // whatever width of viewport, img will fit always fit element
   background-position: top;
@@ -91,19 +154,20 @@ in media query declaration: 1em = 16px
 - `x%` after color to declare at which point color is fully achieved
 - rectangle effect because of degree angle
 
-```CSS
+``css
 .box {
-  background-image: linear-gradient(
-      105deg,
-      rgba($color-white, 0.9) 0%,
+background-image: linear-gradient(
+105deg,
+rgba($color-white, 0.9) 0%,
       rgba($color-white, 0.9) 50%,
-      transparent 50%
-    ),
-    url(../../img/nat-10.jpg);
+transparent 50%
+),
+url(../../img/nat-10.jpg);
 }
-```
 
-```SCSS
+````
+
+```scss
 // solid linear gradient for hover effect
 .link {
   &::before {
@@ -142,14 +206,14 @@ in media query declaration: 1em = 16px
     color: $color-primary;
   }
 }
-```
+````
 
 ## Button and his pseudo-classes
 
 - a pseudo-class allows to select something that cannot be expressed by a simple selector
 - examples: `:link`, `:visited`, `:hover`, `:focus`, `:active` are -> to define in this order
 
-```SCSS
+```scss
 .btn {
   // define 1 generic btn class and add specific properties with specific classes
   &,
@@ -236,18 +300,14 @@ in media query declaration: 1em = 16px
 
 ## Button with nice hover effect
 
-```SCSS
+```scss
 .btn {
   font-size: 1.5rem;
   font-weight: 300;
   text-transform: uppercase;
   border-radius: 100px;
   border: none;
-  background-image: linear-gradient(
-    to right,
-    var(--color-primary-light),
-    var(--color-primary-dark)
-  );
+  background-image: linear-gradient(to right, var(--color-primary-light), var(--color-primary-dark));
   color: #fff;
   cursor: pointer;
   position: relative;
@@ -272,11 +332,7 @@ in media query declaration: 1em = 16px
   }
 
   &:hover {
-    background-image: linear-gradient(
-      to right,
-      var(--color-primary-dark),
-      var(--color-primary-light)
-    );
+    background-image: linear-gradient(to right, var(--color-primary-dark), var(--color-primary-light));
   }
 
   &:hover > &__visible {
@@ -296,21 +352,22 @@ in media query declaration: 1em = 16px
 
 ## Skew Effect on a box, but reset skew for all direct child elements
 
-```CSS
+``css
 .box {
-  transform: skewY(-7deg);
+transform: skewY(-7deg);
 }
 
-.box > * {
-  transform: skewY(7deg);
+.box > \* {
+transform: skewY(7deg);
 }
+
 ```
 
 ## Open and close element (e.g. toggle button) with just CSS
 
 - create the "button" as a checkbox input with a label and use the `:checked` pseudo-class to open the element
 
-```HTML
+``html
 <div class="navigation">
   <input type="checkbox" class="navigation__checkbox" id="navigation-toggle" />
   <label for="navigation-toggle" class="navigation__btn"></label>
@@ -320,7 +377,7 @@ in media query declaration: 1em = 16px
 </div>
 ```
 
-```SCSS
+```scss
 .navigation {
   &__checkbox {
     display: none;
@@ -348,7 +405,7 @@ in media query declaration: 1em = 16px
 
 ## Menu Hamburger Icon animated
 
-```SCSS
+```scss
 .icon {
   position: relative;
 
@@ -407,7 +464,7 @@ in media query declaration: 1em = 16px
 
 ## Float Image around Text
 
-```SCSS
+```scss
 .img-shape {
   position: relative;
   float: left; // element "floats" on the left side of parent element when width/height is given
@@ -455,7 +512,7 @@ in media query declaration: 1em = 16px
 
 ## Open and close popup with help of `:target` pseudo-class and use of id of an element (-> url-path.de/#popup)
 
-```SCSS
+```scss
 .popup {
   position: fixed;
   top: 0;
@@ -509,7 +566,7 @@ in media query declaration: 1em = 16px
 
 ## Form `:invalid` pseudo-class and create custom `Radio` or `Checkbox Button`
 
-```SCSS
+```scss
 .form__input:focus {
   outline: none;
   box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
@@ -586,7 +643,7 @@ in media query declaration: 1em = 16px
 
 ## Rotation effect on hovering card to have 2 sides of a card
 
-```SCSS
+```scss
 // rotation effect on hovering card to have 2 sides of a card
 .card {
   // FUNCTIONALITY
@@ -619,27 +676,15 @@ in media query declaration: 1em = 16px
       transform: rotateY(180deg); // backside is already rotated in the beginning
 
       &-1 {
-        background-image: linear-gradient(
-          to right bottom,
-          $color-secondary-light,
-          $color-secondary-dark
-        );
+        background-image: linear-gradient(to right bottom, $color-secondary-light, $color-secondary-dark);
       }
 
       &-2 {
-        background-image: linear-gradient(
-          to right bottom,
-          $color-primary-light,
-          $color-primary-dark
-        );
+        background-image: linear-gradient(to right bottom, $color-primary-light, $color-primary-dark);
       }
 
       &-3 {
-        background-image: linear-gradient(
-          to right bottom,
-          $color-tertiary-light,
-          $color-tertiary-dark
-        );
+        background-image: linear-gradient(to right bottom, $color-tertiary-light, $color-tertiary-dark);
       }
     }
   }
@@ -662,11 +707,7 @@ in media query declaration: 1em = 16px
     clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
 
     &--1 {
-      background-image: linear-gradient(
-          to right bottom,
-          $color-secondary-light,
-          $color-secondary-dark
-        ),
+      background-image: linear-gradient(to right bottom, $color-secondary-light, $color-secondary-dark),
         url(../../img/nat-5.jpg); // url is relative to css(!) folder with compiled code
     }
 
@@ -676,11 +717,7 @@ in media query declaration: 1em = 16px
     }
 
     &--3 {
-      background-image: linear-gradient(
-          to right bottom,
-          $color-tertiary-light,
-          $color-tertiary-dark
-        ),
+      background-image: linear-gradient(to right bottom, $color-tertiary-light, $color-tertiary-dark),
         url(../../img/nat-7.jpg);
     }
   }
@@ -776,8 +813,7 @@ in media query declaration: 1em = 16px
 
   // @include respond($tab-port) {
   // use additional media query to detect if user can hover on his device or not (iPads etc.)
-  @media only screen and (max-width: calc(calc($tab-port / 16px) * 1em)),
-    only screen and (hover: none) {
+  @media only screen and (max-width: calc(calc($tab-port / 16px) * 1em)), only screen and (hover: none) {
     height: auto;
     border-radius: 3px;
     background-color: $color-white;
@@ -825,27 +861,28 @@ in media query declaration: 1em = 16px
 - `:last-of-type` pseudo class selects last child element in `paragraph` parent element
 - `:last-child` includes all children of `paragraph` parent and only applies for last child
 
-```CSS
+``css
 .paragraph:not(:last-of-type) {
-  margin-bottom: 2rem;
+margin-bottom: 2rem;
 }
-```
+
+````
 
 ## Border-box vs Content-box
 
-```SCSS
-  .photo {
-    box-sizing: content-box; // now border is added on top and does NOT shrink the content (= image)
-    height: 4rem;
-    width: 4rem;
-    border-radius: 50%;
-    border: 3px solid #fff;
-  }
-```
+```scss
+.photo {
+  box-sizing: content-box; // now border is added on top and does NOT shrink the content (= image)
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  border: 3px solid #fff;
+}
+````
 
 ## Z-Index
 
-```SCSS
+```scss
 .text {
   margin-bottom: 2rem;
   position: relative; // Z-INDEX only works with position property

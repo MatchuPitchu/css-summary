@@ -28,7 +28,8 @@
 
 - explanation: <https://www.taniarascia.com/easiest-flex-grid-ever/>
 
-```HTML
+``html
+
 <section class="grid-test">
   <div class="row">
     <div class="col-1-of-2">Col 1 of 2</div>
@@ -61,7 +62,7 @@
 </section>
 ```
 
-```SCSS
+```scss
 // layout/_grid.scss
 $grid-width: 114rem;
 $gutter-vertical: 8rem;

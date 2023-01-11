@@ -47,7 +47,8 @@
 
 ## Example: Basic Propterties Grid Layout
 
-```HTML
+``html
+
 <div class="container">
   <div class="item item--1">1: Orange</div>
   <div class="item item--2">2: Green</div>
@@ -58,7 +59,7 @@
 </div>
 ```
 
-```SCSS
+```scss
 .container {
   background-color: #eee;
   width: 900px;
@@ -70,7 +71,10 @@
 
   grid-template-columns: repeat(2, 150px) 300px; // define number of grid tracks and its width
   grid-template-columns: repeat(2, 150px) 1fr; // fr = fractional unit, this track expands to remaining space
-  grid-template-columns: repeat(3, 1fr); // divide entire space into 3 identical parts, like "flex-grow: 1" for all tracks
+  grid-template-columns: repeat(
+    3,
+    1fr
+  ); // divide entire space into 3 identical parts, like "flex-grow: 1" for all tracks
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-columns: 50% 2fr 1fr; // combine units, notice that gap does NOT belong to the split space in the calc of the tracks
 
@@ -98,7 +102,7 @@
     grid-row: 1 / 2;
     grid-column: 3 / 4;
     // shorthand for grid-row and grid-column
-    grid-area:  1 / 3 / 2 / 4  // row line start | col line start | row line end | col line end
+    grid-area: 1 / 3 / 2 / 4; // row line start | col line start | row line end | col line end
   }
 
   &--3 {
@@ -113,14 +117,19 @@
     grid-column: 2 / -1; // -1 means that item is spanned until last col of EXPLICIT (!) Grid
   }
 
-  &--5 { background-color: blue; }
-  &--6 { background-color: brown; }
+  &--5 {
+    background-color: blue;
+  }
+  &--6 {
+    background-color: brown;
+  }
 }
 ```
 
 ## Basic Grid Layout - V1: Line Numbers
 
-```HTML
+``html
+
 <div class="container">
   <div class="header">Header</div>
   <div class="box--1">Box 1</div>
@@ -132,7 +141,7 @@
 </div>
 ```
 
-```SCSS
+```scss
 // METHOD 1: LINE NUMBERS
 .container {
   width: 600px;
@@ -154,17 +163,29 @@
   grid-area: 1 / 1 / 2 / -1; // row line start | col line start | row line end | col line end
 }
 
-.box--1 { grid-area: 2 / 1 / 3 / 2; }
-.box--2 { grid-area: 2 / 2 / 3 / 3; }
-.box--3 { grid-area: 2 / 3 / 3 / 4; }
-.sidebar { grid-area: 2 / 4 / span 2 / -1; }
-.main { grid-area: 3 / 1 / 4 / span 3; }
-.footer { grid-area: 4 / 1 / -1 / -1; }
+.box--1 {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.box--2 {
+  grid-area: 2 / 2 / 3 / 3;
+}
+.box--3 {
+  grid-area: 2 / 3 / 3 / 4;
+}
+.sidebar {
+  grid-area: 2 / 4 / span 2 / -1;
+}
+.main {
+  grid-area: 3 / 1 / 4 / span 3;
+}
+.footer {
+  grid-area: 4 / 1 / -1 / -1;
+}
 ```
 
 ## Basic Grid Layout - V2: Line Names
 
-```SCSS
+```scss
 // METHOD 2: LINE NAMES
 .container {
   width: 600px;
@@ -182,18 +203,32 @@
   }
 }
 
-.header { grid-area: 1 / col-start 1 / 2 / grid-end; }
-.box--1 { grid-area: 2 / 1 / 3 / 2; }
-.box--2 { grid-area: 2 / 2 / 3 / 3; }
-.box--3 { grid-area: 2 / 3 / 3 / 4; }
-.sidebar { grid-area: box-start / col-end 3 / main-end / grid-end; }
-.main { grid-area: 3 / 1 / 4 / span 3; }
-.footer { grid-area: 4 / col-start 1 / -1 / grid-end; }
+.header {
+  grid-area: 1 / col-start 1 / 2 / grid-end;
+}
+.box--1 {
+  grid-area: 2 / 1 / 3 / 2;
+}
+.box--2 {
+  grid-area: 2 / 2 / 3 / 3;
+}
+.box--3 {
+  grid-area: 2 / 3 / 3 / 4;
+}
+.sidebar {
+  grid-area: box-start / col-end 3 / main-end / grid-end;
+}
+.main {
+  grid-area: 3 / 1 / 4 / span 3;
+}
+.footer {
+  grid-area: 4 / col-start 1 / -1 / grid-end;
+}
 ```
 
 ## Basic Grid Layout - V3: Name Grid Areas
 
-```SCSS
+```scss
 // METHOD 3: NAME GRID AREAS -> easy to use for small layouts
 .container {
   width: 600px;
@@ -207,10 +242,11 @@
   // define names for grid areas
   // every grid cell gets a name, make an exact copy of the layout
   // empty cell with "."
-  grid-template-areas: ". head head ."
-                       "box-1 box-2 box-3 side"
-                       "main main main side"
-                       "foot foot foot foot";
+  grid-template-areas:
+    '. head head .'
+    'box-1 box-2 box-3 side'
+    'main main main side'
+    'foot foot foot foot';
 
   & > * {
     background-color: red;
@@ -224,12 +260,24 @@
   grid-area: head; // all "head" cells in a grid track will be occupied
 }
 
-.box--1 { grid-area: box-1; }
-.box--2 { grid-area: box-2; }
-.box--3 { grid-area: box-3; }
-.sidebar { grid-area: side; }
-.main { grid-area: main; }
-.footer { grid-area: foot; }
+.box--1 {
+  grid-area: box-1;
+}
+.box--2 {
+  grid-area: box-2;
+}
+.box--3 {
+  grid-area: box-3;
+}
+.sidebar {
+  grid-area: side;
+}
+.main {
+  grid-area: main;
+}
+.footer {
+  grid-area: foot;
+}
 ```
 
 ## Explicit vs Implicit Grids
@@ -240,7 +288,8 @@
 - `grid-auto-flow: row`: default = row; change grid direction: with `column` new cols are added as implicit column track(s)
   - `grid-auto-flow: row dense` -> avoid holes when algorithme arrange grid items (when they are NOT explicitly positioned)
 
-```HTML
+``html
+
 <div class="container">
   <div class="item item--1">1</div>
   <div class="item item--2">2</div>
@@ -253,7 +302,7 @@
 </div>
 ```
 
-```SCSS
+```scss
 .container {
   width: 600px;
   margin: 0 auto;
@@ -268,7 +317,7 @@
   // implicit grid definition
   grid-auto-rows: 50px;
   grid-auto-flow: row; // [default: row] | column | row dense | column dense
-  grid-auto-columns: .5fr; // ONLY APPLIES with `grid-auto-flow: column`
+  grid-auto-columns: 0.5fr; // ONLY APPLIES with `grid-auto-flow: column`
 }
 
 .item {
@@ -285,7 +334,7 @@
   - justify = horizontally (-> row direction)
 - `align-self`/`justify-self`: for grid item to overwrite `align-items`/`justify-items` property of grid container
 
-```SCSS
+```scss
 .container {
   width: 600px;
   margin: 0 auto;
@@ -324,7 +373,7 @@
 - matters if grid container is larger than grid content
 - `grid-auto-flow: row dense` -> avoid holes when algorithme arrange grid items (when they are NOT explicitly positioned)
 
-```SCSS
+```scss
 .container {
   width: 600px;
   height: 600px;
@@ -373,7 +422,8 @@
     - min-content: `Loremipsum` is largest word and so largest content in grid item, so NO overflowing to right and left, BUT overflowing to bottom remains possible;
     - if row track is also set to min-content (`grid-template-rows: repeat(2, min-content)`), then grid item content fits perfectly without any overflowing
 
-```HTML
+``html
+
 <div class="container">
   <div class="item item--1">1: Hello hello hello</div>
   <div class="item item--2">2</div>
@@ -386,7 +436,7 @@
 </div>
 ```
 
-```SCSS
+```scss
 .container {
   width: 600px;
   height: 600px;
@@ -404,14 +454,30 @@
   color: #fff;
   background-color: red;
 
-  &--1 { background-color: red; }
-  &--2 { background-color: orange; }
-  &--3 { background-color: blue; }
-  &--4 { background-color: green; }
-  &--5 { background-color: orangered; }
-  &--6 { background-color: purple; }
-  &--7 { background-color: violet; }
-  &--8 { background-color: darkblue; }
+  &--1 {
+    background-color: red;
+  }
+  &--2 {
+    background-color: orange;
+  }
+  &--3 {
+    background-color: blue;
+  }
+  &--4 {
+    background-color: green;
+  }
+  &--5 {
+    background-color: orangered;
+  }
+  &--6 {
+    background-color: purple;
+  }
+  &--7 {
+    background-color: violet;
+  }
+  &--8 {
+    background-color: darkblue;
+  }
 }
 ```
 
@@ -420,7 +486,7 @@
 - `minmax()`: ensure that grid track stays between 2 defined values
   - example `grid-template-rows: repeat(2, minmax(150px, min-content))`: row has at least height of `150px`, BUT if content is larger, then grid item becomes heigher
 
-```SCSS
+```scss
 .container {
   width: 90%;
   height: 600px;
@@ -437,14 +503,30 @@
   color: #fff;
   background-color: red;
 
-  &--1 { background-color: red; }
-  &--2 { background-color: orange; }
-  &--3 { background-color: blue; }
-  &--4 { background-color: green; }
-  &--5 { background-color: orangered; }
-  &--6 { background-color: purple; }
-  &--7 { background-color: violet; }
-  &--8 { background-color: darkblue; }
+  &--1 {
+    background-color: red;
+  }
+  &--2 {
+    background-color: orange;
+  }
+  &--3 {
+    background-color: blue;
+  }
+  &--4 {
+    background-color: green;
+  }
+  &--5 {
+    background-color: orangered;
+  }
+  &--6 {
+    background-color: purple;
+  }
+  &--7 {
+    background-color: violet;
+  }
+  &--8 {
+    background-color: darkblue;
+  }
 }
 ```
 
@@ -454,7 +536,7 @@
 - `auto-fit` creates automatically as many tracks as fit in the grid container, BUT if less tracks than space in container, then these tracks collapse to width 0
 - combined with `minmax()`, you can easily create responsive layouts
 
-```SCSS
+```scss
 .container {
   width: 1000px;
   height: 100%;
@@ -479,14 +561,30 @@
   color: #fff;
   background-color: red;
 
-  &--1 { background-color: red; }
-  &--2 { background-color: orange; }
-  &--3 { background-color: blue; }
-  &--4 { background-color: green; }
-  &--5 { background-color: orangered; }
-  &--6 { background-color: purple; }
-  &--7 { background-color: violet; }
-  &--8 { background-color: darkblue; }
+  &--1 {
+    background-color: red;
+  }
+  &--2 {
+    background-color: orange;
+  }
+  &--3 {
+    background-color: blue;
+  }
+  &--4 {
+    background-color: green;
+  }
+  &--5 {
+    background-color: orangered;
+  }
+  &--6 {
+    background-color: purple;
+  }
+  &--7 {
+    background-color: violet;
+  }
+  &--8 {
+    background-color: darkblue;
+  }
 }
 ```
 
@@ -496,7 +594,7 @@
 
 - see entire code in project repository
 
-```SCSS
+```scss
 .container {
   display: grid;
   // use relative units for responsive layout
@@ -519,10 +617,7 @@
   @media only screen and (max-width: $bp-large) {
     grid-template-rows: 6rem 80vh min-content 40vw repeat(3, min-content);
     grid-template-columns:
-      [full-start] minmax(6rem, 1fr) [center-start] repeat(
-        8,
-        [col-start] minmax(min-content, 14rem) [col-end]
-      )
+      [full-start] minmax(6rem, 1fr) [center-start] repeat(8, [col-start] minmax(min-content, 14rem) [col-end])
       [center-end] minmax(6rem, 1fr) [full-end];
   }
 
@@ -535,12 +630,12 @@
     grid-template-rows: 6rem calc(100vh - 6rem);
   }
 }
-
 ```
 
 ## Example: Grid Header Dynamic and Responsive
 
-```HTML
+``html
+
 <header class="header">
   <img src="img/logo.png" alt="Nexter logo" class="header__logo" />
   <h3 class="heading-3">Your own home:</h3>
@@ -556,13 +651,12 @@
 </header>
 ```
 
-```SCSS
+```scss
 // header row has height of 80vh (see grid definition of .container)
 .header {
   grid-column: full-start / col-end 6; // name set of columns col-start x to col-end x -> use dev tools to count cols
   // best way to create overlay
-  background-image: linear-gradient(rgba($color-secondary, 0.93), rgba($color-secondary, 0.93)),
-    url(../img/hero.jpeg);
+  background-image: linear-gradient(rgba($color-secondary, 0.93), rgba($color-secondary, 0.93)), url(../img/hero.jpeg);
   background-position: center;
   padding: 4rem 8rem 8rem 8rem;
 
@@ -634,7 +728,8 @@
 
 ## Example: Grid Image Gallery
 
-```HTML
+``html
+
  <section class="gallery">
   <!-- Emmet HTML Generator code for this section
   (figure.gallery__item.gallery__item--$>img.gallery__img[src="img/gal-$.jpeg"][alt="Gallery image $"])*14
@@ -684,7 +779,7 @@
 </section>
 ```
 
-```SCSS
+```scss
 // Hint for starting a grid gallery: take the smallest grid cell you wish to have in order to define the entire grid
 // - create wrapper container around img to apply object-fit: cover on img and cover 100% width/height of grid area
 
@@ -702,20 +797,48 @@
   padding: 1.5rem;
 
   &__item {
-    &--1 { grid-area: 1 / 1 / span 2 / span 2; }
-    &--2 { grid-area: 1 / 3 / span 3 / span 3; }
-    &--3 { grid-area: 1 / 6 / span 2 / 7; }
-    &--4 { grid-area: 1 / 7 / span 2 / span 2; }
-    &--5 { grid-area: 3 / 1 / span 3 / span 2; }
-    &--6 { grid-area: 4 / 3 / span 2 / span 2; }
-    &--7 { grid-area: 4 / 5 / 5 / 6; }
-    &--8 { grid-area: 3 / 6 / span 2 / span 2; }
-    &--9 { grid-area: 3 / 8 / span 3 / 9; }
-    &--10 { grid-area: 6 / 1 / span 2 / 2; }
-    &--11 { grid-area: 6 / 2 / span 2 / span 2; }
-    &--12 { grid-area: 6 / 4 / span 2 / 5; }
-    &--13 { grid-area: 5 / 5 / span 3 / span 3; }
-    &--14 { grid-area: 6 / 8 / span 2 / 9; }
+    &--1 {
+      grid-area: 1 / 1 / span 2 / span 2;
+    }
+    &--2 {
+      grid-area: 1 / 3 / span 3 / span 3;
+    }
+    &--3 {
+      grid-area: 1 / 6 / span 2 / 7;
+    }
+    &--4 {
+      grid-area: 1 / 7 / span 2 / span 2;
+    }
+    &--5 {
+      grid-area: 3 / 1 / span 3 / span 2;
+    }
+    &--6 {
+      grid-area: 4 / 3 / span 2 / span 2;
+    }
+    &--7 {
+      grid-area: 4 / 5 / 5 / 6;
+    }
+    &--8 {
+      grid-area: 3 / 6 / span 2 / span 2;
+    }
+    &--9 {
+      grid-area: 3 / 8 / span 3 / 9;
+    }
+    &--10 {
+      grid-area: 6 / 1 / span 2 / 2;
+    }
+    &--11 {
+      grid-area: 6 / 2 / span 2 / span 2;
+    }
+    &--12 {
+      grid-area: 6 / 4 / span 2 / 5;
+    }
+    &--13 {
+      grid-area: 5 / 5 / span 3 / span 3;
+    }
+    &--14 {
+      grid-area: 6 / 8 / span 2 / 9;
+    }
   }
 
   // img covers whole parent container (= figure element gallery__item)
@@ -730,7 +853,8 @@
 
 ## Example: Grid Image Positioning in Layout
 
-```HTML
+``html
+
 <div class="story__pictures">
   <img src="img/story-1.jpeg" alt="Couple with new house" class="story__img--1" />
   <img src="img/story-2.jpeg" alt="New house" class="story__img--2" />
@@ -746,13 +870,12 @@
 </div>
 ```
 
-```SCSS
+```scss
 .story {
   &__pictures {
     grid-column: full-start / col-end 4;
     background-color: $color-primary;
-    background-image: linear-gradient(rgba($color-primary, 0.5), rgba($color-primary, 0.5)),
-      url(../img/back.jpg); // bg image with overlay linear-gradient to adapt at design
+    background-image: linear-gradient(rgba($color-primary, 0.5), rgba($color-primary, 0.5)), url(../img/back.jpg); // bg image with overlay linear-gradient to adapt at design
     background-size: cover;
 
     display: grid;
