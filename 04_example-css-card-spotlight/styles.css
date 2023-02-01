@@ -23,9 +23,10 @@ body {
 }
 
 .cards-container:hover > .card {
+  /* only hover over cards container creates effect */
   background: radial-gradient(
     /* width, form and position of gradient in box*/ 100rem circle at var(--xPosition) var(--yPosition),
-    /* color with opacity */ rgba(0, 174, 255, 0.4),
+    /* color with opacity */ rgba(255, 196, 0, 0.4),
     transparent 15%
   );
 }
@@ -34,16 +35,9 @@ body {
   position: relative;
   display: grid;
   place-items: center;
-
   width: 20rem;
   height: 15rem;
   border-radius: 4px;
-  /* per default: positions and colors are set to 0; only hover on cards container creates effect */
-  background: radial-gradient(
-    /* width, form and position of gradient in box*/ 100rem circle at 0 0,
-    /* color with opacity */ 0,
-    transparent 0
-  );
   transition: all 0.2s;
 }
 
@@ -57,8 +51,8 @@ body {
   height: 100%;
   border-radius: inherit;
   background: radial-gradient(
-    /* width, form and position of gradient in box*/ 60rem circle at var(--xPosition) var(--yPosition),
-    /* color with opacity */ rgba(0, 174, 255, 0.1),
+    60rem circle at var(--xPosition) var(--yPosition),
+    rgba(255, 196, 0, 0.05),
     transparent 35%
   );
   opacity: 0;
@@ -71,14 +65,15 @@ body {
 
 /* card shrinks on hover */
 .card:hover {
-  transform: scale(0.97);
+  transform: scale(0.98);
 }
 
 .card__content {
-  background-color: rgb(40, 40, 41);
+  --card-border: 4px;
+  background-color: #282829;
   border-radius: inherit;
   transition: all 0.3s;
   /* content is smaller than card to show border animation effect */
-  width: calc(100% - 4px);
-  height: calc(100% - 4px);
+  width: calc(100% - var(--card-border));
+  height: calc(100% - var(--card-border));
 }
