@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem;
+}
+
+/* Example 1: select image based on pixel density */
+.background-image {
+  width: 20rem;
+  height: 10rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  background-image: -webkit-image-set(
+    url('https://placeimg.com/640/480/nature') 1x,
+    url('https://placeimg.com/1000/800/tech') 2x
+  );
+}
+
+/* Example 2: avoid layout shift with text; if e.g. you open more text with a button
+and your text is longer than the screen height and scrollbar is added to window */
+.layout-shift-section {
+  scrollbar-gutter: stable;
+}
+
+/* Example 3: cut text with '...' at the end after x rows, no matter what size textbox has */
+.text-cut {
+  width: 20rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/* Example 4: currentColor -> based on the "current" color of an element */
+.box {
+  color: orange;
+}
+
+.box > p {
+  padding: 2rem;
+  font-size: 2rem;
+  color: currentColor;
+}
+
+.box > p:hover {
+  outline: 2px solid currentColor;
+}
+
+/* Example 5: allow only touch actions for x or y axis or nothing,
+can be simulated with dev tools in browser */
+.container-lg {
+  display: grid;
+  place-items: center;
+  width: 150vw;
+  height: 20rem;
+  touch-action: pan-y;
+}
+
+.element {
+  width: 20rem;
+  height: 5rem;
+  border-radius: 4px;
+  background-color: orange;
+}
