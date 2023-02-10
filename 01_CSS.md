@@ -4,7 +4,7 @@
 
 - HTML-Entities Sonderzeichen Symbole: <http://unicode.e-workers.de/entities.php>
 
-  ``html
+  ```html
   <p>&rarr; Pfeil</p>
   <p>&times; x</p>
   ```
@@ -90,55 +90,37 @@ Browser:
   - e) `Used value`: final calculations, based on layout (e.g. `percentage` depends on the layout)
   - f) `Actual value`: browsers and devices have destrictions, so usually values are rounded (-> `184.8px` to `185px`)
 
-  ``html
+  ````html
   <!-- Example -->
-  <div class='section'>
-    <p class='amazing'>CSS</p>
+  <div class="section">
+    <p class="amazing">CSS</p>
   </div>
-  ```
-
-  ``css
-  .section {
-  font-size: 1.5rem;
-  width: 280px;
-  background-color: red;
-  }
-
-  p {
-  /_ font-size here is inherited from parent element, that has declared value of 1.5rem _/
-  width: 140px;
-  background-color: green;
-  }
-
-  .amazing {
-  width: 66%
-  }
-
-  ```
-
-  ```
+  ``` ```css .section { font-size: 1.5rem; width: 280px; background-color: red; } p { /* font-size here is inherited
+  from parent element, that has declared value of 1.5rem */ width: 140px; background-color: green; } .amazing { width:
+  66%; } ```
+  ````
 
 ## Units Conversion From Relative To Absolute (px)
 
-``css
-html, body {
-font-size: 16px;
-width: 80vw;
+```css
+html,
+body {
+  font-size: 16px;
+  width: 80vw;
 }
 
 header {
-font-size: 150%; /_ 24px _/
-padding: 2em; /_ 48px _/
-margin-bottom: 10rem; /_ 160px _/
-height: 90vh;
-width: 1000px
+  font-size: 150%; /* 24px */
+  padding: 2em; /* 48px */
+  margin-bottom: 10rem; /* 160px */
+  height: 90vh;
+  width: 1000px;
 }
 
 .header-child {
-font-size: 3em; /_ 72px _/
-padding: 10% /_ 100px _/
+  font-size: 3em; /* 72px */
+  padding: 10%; /* 100px */
 }
-
 ```
 
 - % font-size: `x% * parent's computed font-size`
@@ -159,14 +141,14 @@ padding: 10% /_ 100px _/
 - `inherit` keyword forces inheritance for certain property
 - `initial` keyword resets property to its initial value
 
-``css
+```css
 .parent {
   font-size: 20px;
   line-height: 150%;
 }
 
 .child {
-  font-size: 25px
+  font-size: 25px;
   /* inherited line-height: 30px */
 }
 ```
@@ -211,25 +193,25 @@ Algorithm that calculates boxes and determines the layout of these boxes, for ea
   - Element: part of a block that has no standalone meaning
   - Modifier: different version of block or element
 
-  ``css
-  .block {}
-  .block**element {}
-  .block**element--modifier {}
-
+  ```css
+  .block {
+  }
+  .block__element {
+  }
+  .block__element--modifier {
+  }
   ```
 
-  - `Attention` (teacher did NOT have correct usage of modifiers): you can NOT use modifier on its own, it must modify the block/element main class. For example:
+- `Attention` (teacher did NOT have correct usage of modifiers): you can NOT use modifier on its own, it must modify the block/element main class. For example:
 
-  ``html
-  <h1 class="heading-primary heading-primary--rounded heading-primary--orange">
-      ...
-  </h1>
+```html
+<h1 class="heading-primary heading-primary--rounded heading-primary--orange">...</h1>
 
-  <h1 class="heading-primary">
-      <span class="heading-primary__text heading-primary__text--main">Outdoors</span>
-      <span class="heading-primary__text heading-primary__text--sub">is where life happens</span>
-  </h1>
-  ```
+<h1 class="heading-primary">
+  <span class="heading-primary__text heading-primary__text--main">Outdoors</span>
+  <span class="heading-primary__text heading-primary__text--sub">is where life happens</span>
+</h1>
+```
 
 ### Architect
 
@@ -252,7 +234,7 @@ Documentation with examples: <https://sass-lang.com/guide>
 - install `sass` as `dev` dependency in your project: `npm i sass --save-dev`
 - define `script` in `package.json` for compiling Sass file(s) to CSS file(s) and watch changes in Sass when saving it
 
-```JSON
+```json
 "scripts": {
   "compile:sass": "sass sass/main.scss css/style.css -w", // only selected file to selected file
   "compile:sass": "sass sass:css -w" // whole folder to folder
@@ -371,7 +353,7 @@ Documentation with examples: <https://sass-lang.com/guide>
 - Autoprefixer npm package: `npm i postcss postcss-cli autoprefixer --save-dev` <https://www.npmjs.com/package/autoprefixer>
 - npm run all package to run multiple script tasks in parallel: `npm install npm-run-all --save-dev` <https://www.npmjs.com/package/npm-run-all>
 
-```JSON
+```json
 // package.json
 // & runs tasks in parallel; && runs tasks sequentially
 {
@@ -387,30 +369,28 @@ Documentation with examples: <https://sass-lang.com/guide>
     // run all script tasks at once
     "build:css": "npm-run-all compile:sass concat:css prefix:css compress:css"
   },
-    "devDependencies": {
-      "autoprefixer": "^10.4.2",
-      "concat": "^1.0.3",
-      "lite-server": "^2.6.1",
-      "npm-run-all": "^4.1.5",
-      "postcss": "^8.4.6",
-      "postcss-cli": "^9.1.0"
-    }
+  "devDependencies": {
+    "autoprefixer": "^10.4.2",
+    "concat": "^1.0.3",
+    "lite-server": "^2.6.1",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.6",
+    "postcss-cli": "^9.1.0"
+  }
 }
-
 ```
 
 ### Basic Summary - Example
 
-``html
-
+```html
 <nav>
-  <ul class='navigation'>
-    <li><a href='#'>About us</a></li>
-    <li><a href='#'>Contact</a></li>
+  <ul class="navigation">
+    <li><a href="#">About us</a></li>
+    <li><a href="#">Contact</a></li>
   </ul>
-  <div class='buttons'>
-    <a role='button' class='btn-main' href='#'>Sign up</a>
-    <a role='button' class='btn-hot' href='#'>Login</a>
+  <div class="buttons">
+    <a role="button" class="btn-main" href="#">Sign up</a>
+    <a role="button" class="btn-hot" href="#">Login</a>
   </div>
 </nav>
 ```
@@ -574,7 +554,7 @@ nav {
 
   - `src`: add attribute for old browsers that don't understand `srcset`
 
-    ``html
+    ```html
     <img
       srcset="img/nat-1.jpg 300w, img/nat-1-large.jpg 1000w"
       sizes="(max-width: 900px) 20vw,
@@ -585,16 +565,13 @@ nav {
       src="img/nat-1-large.jpg"
       loading="lazy"
     />
-
-    ```
-
     ```
 
 - `density switching`: decrease img resolution of an img of the same size
 
   - `density descriptor`: 1x/2x according to screen (high-/low-res) of user, `src` is fallback for old browsers that don't understand `srcset`
 
-    ``html
+    ```html
     <img
       srcset="img/logo-green-1x.png 1x, img/logo-green-2x.png 2x"
       alt="Full logo"
@@ -602,9 +579,6 @@ nav {
       src="img/logo-green-1x.png"
       loading="lazy"
     />
-
-    ```
-
     ```
 
 - `art direction`: different img for large and small screen
@@ -612,12 +586,9 @@ nav {
   - changing images with `<picture>`
   - media attribute in `<source>` stands for media condition; if query does NOT match, then fallback (-> `<img .../>`) is displayed
 
-  ``html
+  ```html
   <picture class="footer__logo">
-    <source
-      srcset="img/logo-green-small-1x.png 1x, img/logo-green-small-2x.png 2x"
-      media="(max-width: 37.5em)"
-    />
+    <source srcset="img/logo-green-small-1x.png 1x, img/logo-green-small-2x.png 2x" media="(max-width: 37.5em)" />
     <img
       srcset="img/logo-green-1x.png 1x, img/logo-green-2x.png 2x"
       alt="Full logo"
@@ -627,12 +598,12 @@ nav {
   </picture>
 
   <picture>
-   <source media="(min-width: 1440px)" srcset="pic-920.jpg 1x, pic-1840.jpg 2x">
-   <source media="(min-width: 680px) and (orientation:portrait)" srcset="pic-960-quad.jpg">
-   <source media="(min-width: 680px)" srcset="html-pic-920.jpg">
-   <source media="(min-width: 300px) and (orientation:portrait)" srcset="pic-600-quad.jpg">
-   <source media="(min-width: 300px)" srcset="pic-600.jpg">
-   <img loading="lazy" src="pic-960-quad.jpg" width="960" height="670" alt="HTML picture-Element">
+    <source media="(min-width: 1440px)" srcset="pic-920.jpg 1x, pic-1840.jpg 2x" />
+    <source media="(min-width: 680px) and (orientation:portrait)" srcset="pic-960-quad.jpg" />
+    <source media="(min-width: 680px)" srcset="html-pic-920.jpg" />
+    <source media="(min-width: 300px) and (orientation:portrait)" srcset="pic-600-quad.jpg" />
+    <source media="(min-width: 300px)" srcset="pic-600.jpg" />
+    <img loading="lazy" src="pic-960-quad.jpg" width="960" height="670" alt="HTML picture-Element" />
   </picture>
   ```
 
@@ -640,27 +611,23 @@ nav {
 
   - use `media query` to switch background images e.g. depending on screen resolution (dpi) and width
 
-    ``css
+    ```css
     .header {
-    background-image: linear-gradient(
-    to right bottom,
-    rgba($color-primary-light, 0.8),
+      background-image: linear-gradient(
+          to right bottom,
+          rgba($color-primary-light, 0.8),
           rgba($color-primary-dark, 0.8)
-    ),
-    url(../img/hero-small.jpg);
+        ), url(../img/hero-small.jpg);
     }
-    /_ comma stands for OR _/
+
+    /* comma = OR */
     @media (min-resolution: 192dpi) and (min-width: 600px), (min-width: 2000px) {
-    .header {
-    background-image: linear-gradient(
-    to right bottom,
-    rgba($color-primary-light, 0.8),
+      .header {
+        background-image: linear-gradient(
+            to right bottom,
+            rgba($color-primary-light, 0.8),
             rgba($color-primary-dark, 0.8)
-    ),
-    url(../img/hero.jpg);
+          ), url(../img/hero.jpg);
+      }
     }
-    }
-
-    ```
-
     ```
